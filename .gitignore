@@ -1,0 +1,14 @@
+# Logs
+logs
+*.log
+
+# Vim swap file
+*.swp
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# build, dist, etc
+build
+dist
