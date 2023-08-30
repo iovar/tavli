@@ -1,3 +1,3 @@
-import { Viewport } from './components/viewport/viewport.js';
+import { Board } from './components/board/board.js';
 
-customElements.define('viewport-x', Viewport);
+customElements.define('board-x', Board);
