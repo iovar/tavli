@@ -3,6 +3,7 @@
     --piece-white-shadow: #AEACAF;
     --piece-black: #090906;
     --piece-black-shadow: #393936;
+    --select-highlight: #FFFFFF;
 
     position: relative;
     width: 100%;
@@ -12,7 +13,7 @@
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 }
 
-.piece [class^=layer-] {
+.piece [class^=layer-], .select-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -50,4 +51,8 @@
 
 .piece[data-team="1"] .layer-c {
     background: radial-gradient(var(--piece-black), var(--piece-black-shadow));
+}
+
+.select-container[data-selected="true"] {
+    box-shadow: 0 0 12px var(--select-highlight), 0 0 12px var(--select-highlight);
 }

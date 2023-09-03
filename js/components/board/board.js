@@ -3,10 +3,10 @@ import config from '../../../config.js';
 const { BaseComponent } = await import(`${config.BASE_PATH}/base-component.js`);
 
 export class Board extends BaseComponent {
-    matrix = [];
+    static url = import.meta.url;
 
     constructor() {
-        super(import.meta.url);
+        super(Board.url);
     }
 
     connectedCallback() {
@@ -14,9 +14,12 @@ export class Board extends BaseComponent {
     }
 
     initData() {
+        const matrix = [];
         for (let i = 0; i < 24; i++) {
-            const allItems = Array.from({ length: i }, (_, k) => ({ team: `${k%2}` }));
-            this.matrix[i] = {
+            const allItems = Array.from({ length: i }, (_, k) => (
+                { props: JSON.stringify({ team: `${k%2}` , selected: i === 3 }) }
+            ));
+            matrix[i] = {
                 piecesA: allItems.slice(0, 5),
                 piecesB: allItems.slice(5, 10),
                 piecesC: allItems.slice(10, 15),
@@ -24,20 +27,21 @@ export class Board extends BaseComponent {
                 index: `${i}`,
             };
         }
-        this.setStateValues(this.matrixAsState());
+        this.setStateValues(this.matrixToAreas(matrix));
     }
 
-    matrixAsState() {
+    matrixToAreas(matrix) {
         return {
-            leftTop: this.matrix.slice(6, 12).reverse(),
-            leftBottom: this.matrix.slice(12, 18),
-            rightTop: this.matrix.slice(0, 6).reverse(),
-            rightBottom: this.matrix.slice(18, 24),
+            matrix,
+            leftTop: matrix.slice(6, 12).reverse(),
+            leftBottom: matrix.slice(12, 18),
+            rightTop: matrix.slice(0, 6).reverse(),
+            rightBottom: matrix.slice(18, 24),
         }
     }
 
-    clickTriangle() {
-        console.log('clicked');
+    clickTriangle(event) {
+        console.log('clicked', event.currentTarget, event.target);
         // const slot = this.shadowRoot.querySelector('slot[name=link]')
         // const link = slot.assignedNodes()[0];
         // link.click();
