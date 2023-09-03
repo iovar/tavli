@@ -19,16 +19,15 @@
 
 <template data-name="triangleTemplate">
     <div class="triangle-container">
-        <div class="triangle" data-attr="data-position:index"></div>
+        <div class="triangle"></div>
         <div class="stack-a" data-list="piecesA:pieceTemplate"></div>
         <div class="stack-b" data-list="piecesB:pieceTemplate"></div>
         <div class="stack-c" data-list="piecesC:pieceTemplate"></div>
         <div class="stack-d" data-list="piecesD:pieceTemplate"></div>
+        <div class="overlay" data-attr="data-position:index"></div>
     </div>
 </template>
 
 <template data-name="pieceTemplate">
-    <div class="piece-container">
-        <piece-x data-attr="data-props:props"></piece-x>
-    </div>
+    <piece-x data-attr="data-props:props"></piece-x>
 </template>

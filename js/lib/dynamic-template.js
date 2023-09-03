@@ -110,12 +110,15 @@ function updateAttrSlots(node, context) {
     const attrSlots = querySelectorAllWithRoot(node, FLAT_SELECTORS[1]);
 
     attrSlots.forEach((elem) => {
-        const [ attrName, propName ] = elem.dataset.attr.split(':');
-        const { value, changed } = getValueFromContext(propName, context);
+        const attributes = elem.dataset.attr.split(',');
+        attributes.forEach((attr) => {
+            const [ attrName, propName ] = attr.split(':');
+            const { value, changed } = getValueFromContext(propName, context);
 
-        if (changed && attrName) {
-            elem.setAttribute(attrName, value || '');
-        }
+            if (changed && attrName) {
+                elem.setAttribute(attrName, value || '');
+            }
+        });
     });
 }
 

@@ -41,7 +41,7 @@ export class Board extends BaseComponent {
     }
 
     clickTriangle(event) {
-        console.log('clicked', event.currentTarget, event.target);
+        console.log(event.target.dataset.position);
         // const slot = this.shadowRoot.querySelector('slot[name=link]')
         // const link = slot.assignedNodes()[0];
         // link.click();

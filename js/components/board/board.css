@@ -114,7 +114,15 @@
     height: calc(100% - 2px)
 }
 
-.triangle-container:hover {
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 20px)
+}
+
+.overlay:hover {
     border-radius: 2%;
     box-shadow: 0 0 4px var(--highlight-col), inset 0 0 2px var(--highlight-col);
 }

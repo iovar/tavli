@@ -1,6 +1,4 @@
-const fetchedTemplates = {
-    /* key: template */
-};
+const fetchedTemplates = { /* key: template */ };
 
 window.fetchedTemplates = fetchedTemplates;
 async function fetchTemplatePart(url) {

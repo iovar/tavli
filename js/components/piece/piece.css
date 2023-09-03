@@ -1,3 +1,8 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
 .piece {
     --piece-white: #FEFCFF;
     --piece-white-shadow: #AEACAF;
@@ -13,7 +18,7 @@
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 }
 
-.piece [class^=layer-], .select-container {
+.piece [class^=layer-] {
     position: absolute;
     top: 0;
     left: 0;
