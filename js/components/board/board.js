@@ -7,6 +7,9 @@ export class Board extends BaseComponent {
 
     constructor() {
         super(import.meta.url);
+    }
+
+    connectedCallback() {
         this.initData();
     }
 
@@ -21,7 +24,6 @@ export class Board extends BaseComponent {
                 index: `${i}`,
             };
         }
-        console.log(this.matrix);
         this.setStateValues(this.matrixAsState());
     }
 
