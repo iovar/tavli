@@ -15,7 +15,9 @@
 </head>
 <body>
     <div class="root">
-        <board-x></board-x>
+        <board-x data-id="board"></board-x>
+        <dice-x data-id="dice"></dice-x>
+        <menu-x data-board-id="board" data-dice-id="dice"></menu-x>
     </div>
     <script>
         if ('serviceWorker' in navigator) {

@@ -116,7 +116,7 @@ function updateAttrSlots(node, context) {
             const { value, changed } = getValueFromContext(propName, context);
 
             if (changed && attrName) {
-                elem.setAttribute(attrName, value || '');
+                elem.setAttribute(attrName, (value === null || value === undefined) ? '' : value);
             }
         });
     });
