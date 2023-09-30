@@ -29,7 +29,7 @@ export class Menu extends BaseComponent {
 
     initializeDice(values) {
         this.dice = document.querySelector(`[data-id="${this.dataset.diceId}"]`);
-        this.dice.roll(...values);
+        this.dice.set(...values);
         this.dice.show();
     }
 

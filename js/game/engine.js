@@ -42,7 +42,7 @@ const BOARD_UPDATE = 'board_update';
 export function* gameEngine(game) {
     let matrix = initMatrix(game);
 
-    yield { matrix, event: BOARD_UPDATE, dice: [1, 3] }
+    yield { matrix, event: BOARD_UPDATE, dice: [6, 6] }
 
     // if first die roll has a > b, player starts, if not b starts
     // if a === b, random > 0.5 => a, otherwise, b

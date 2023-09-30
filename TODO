@@ -1,3 +1,6 @@
 - Coopy rotation from PongNM
 - icon, manifest, sw.js
 - cleanup
+- game engine
+- unload protection
+- copy back lib, link
