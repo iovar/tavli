@@ -4,12 +4,19 @@ const { BaseComponent } = await import(`${config.BASE_PATH}/base-component.js`);
 
 export class Board extends BaseComponent {
     static url = import.meta.url;
+    allowInput = false;
     lastInputMatrix = [];
     selected = -1;
     moveCallback = () => {};
 
     constructor() {
         super(Board.url);
+    }
+
+    set allowInput(value) {
+        if (value !== this.allowInput && value === false || value === true) {
+            this.allowInput = value;
+        }
     }
 
     setMoveCallback(fn) {
@@ -53,6 +60,9 @@ export class Board extends BaseComponent {
     }
 
     clickTriangle(event) {
+        if (!this.allowInput) {
+            return;
+        }
         const newPosition = parseInt(event.target.dataset.position);
         if (this.selected >= 0) {
             this.moveCallback(this.selected, newPosition);
@@ -61,8 +71,5 @@ export class Board extends BaseComponent {
             this.selected = newPosition;
         }
         this.updateBoard(this.lastInputMatrix);
-        // const slot = this.shadowRoot.querySelector('slot[name=link]')
-        // const link = slot.assignedNodes()[0];
-        // link.click();
     }
 }

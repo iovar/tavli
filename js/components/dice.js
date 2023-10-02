@@ -103,4 +103,4 @@ export class Dice extends BaseComponent {
         this.setStateValues({ ...this.state.values, visible: false });
     }
 }
-// <script>
+// </script>
