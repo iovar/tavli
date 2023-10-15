@@ -1,3 +1,6 @@
+// vi: ft=html
+function getTemplate({ team }) { return `
+<style>
 :host {
     display: block;
     width: 100%;
@@ -61,3 +64,26 @@
 .select-container[data-selected="true"] {
     box-shadow: 0 0 12px var(--select-highlight), 0 0 12px var(--select-highlight);
 }
+</style>
+<div class="piece select-container" data-team="${team}">
+    <div class="layer-a"></div>
+    <div class="layer-b"></div>
+    <div class="layer-c"></div>
+</div>
+`}
+
+// <script>
+export class Piece extends HTMLElement {
+    static get observedProps() { return [ 'data-team' ]; }
+
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        const { team } = this.dataset;
+        this.shadowRoot.innerHTML = getTemplate({ team });
+    }
+}
+// </script>

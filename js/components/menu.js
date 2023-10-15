@@ -1,5 +1,5 @@
 // vi: ft=html
-function getTemplate() { return `
+function getTemplate({ playing }) { return `
 <style>
 .menu-container {
     position: fixed;
@@ -20,18 +20,18 @@ button {
 }
 </style>>
 
-<section class="menu-container" data-if="not:playing">
+${ playing ? '' : `
+<section class="menu-container">
     <h2>Tavli, by Ioannis Varouchakis</h2>
     <menu>
-        <button data-game="plakoto" data-callback="click:startGame">Play Plakoto</button>
-        <button data-game="portes" data-callback="click:startGame">Play Portes</button>
-        <button data-game="fevga" data-callback="click:startGame">Play Fevga</button>
+        <button onclick="this.getRootNode().host.startGame('plakoto')">Play Plakoto</button>
+        <button onclick="this.getRootNode().host.startGame('portes')">Play Portes</button>
+        <button onclick="this.getRootNode().host.startGame('fevga')">Play Fevga</button>
     </menu>
-</section>
+</section>`}
 `}
 
 // <script>
-import config from '../../config.js';
 import {
     WAIT_INPUT,
     ROLL,
@@ -42,44 +42,46 @@ import {
 } from '../game/engine.js';
 
 const UPDATE_TIMEOUT = 3000;
-const { BaseComponent } = await import(`${config.BASE_PATH}/base-component.js`);
 
-export class Menu extends BaseComponent {
+export class Menu extends HTMLElement {
     board = null;
     allowInput = false;
+    engine = null;
 
     constructor() {
-        super(getTemplate(), { inline: true });
+        super();
+        this.attachShadow({ mode: 'open' });
     }
 
     connectedCallback() {
-        this.setStateValues({ ...this.state.values, engine: null });
+        this.shadowRoot.innerHTML = getTemplate(false);
     }
 
-    startGame(event) {
-        const game = event.target.dataset.game;
+    startGame(game) {
         const engine = gameEngine(game);
         let { value } = engine.next();
 
         this.initializeDice(value.dice);
         this.initializeBoard(value.matrix);
-        this.setStateValues({ ...this.state.values, engine, playing: true });
+        this.engine = engine;
+        this.shadowRoot.innerHTML = getTemplate({ playing: true });
 
         this.runLoop();
     }
 
     runLoop(selected, newPosition) {
         console.log(selected, newPosition);
-        if (!this.state.values.engine) {
+        if (!this.engine) {
             return;
         }
 
-        let { value } = this.state.values.engine.next({ selected, newPosition });
+        let { value } = this.engine.next({ selected, newPosition });
 
         this.board.allowInput = false;
 
         if (value?.event === END) {
-            this.setStateValues({ ...this.state.values,  engine: null, playing: false });
+            this.engine = null;
+            this.shadowRoot.innerHTML = getTemplate({ playing: false });
         } else if ([ROLL, PC_MOVE, BOARD_UPDATE].includes(value?.event)) {
             setTimeout(() => {
                 this.runLoop();

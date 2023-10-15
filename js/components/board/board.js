@@ -32,20 +32,18 @@ export class Board extends BaseComponent {
         const matrix = [];
 
         Array.from({ length: 24 }, (_, index) => {
-            const isSelectedColumn = index === this.selected;
-
-            const allItems = inputMatrix[index] ? inputMatrix[index].map((team) => (
-                { props: JSON.stringify({ team, selected: isSelectedColumn.toString(), index }) }
-            )) : [];
+            const items = (inputMatrix[index] ?? []).map((team) => ({ team }));
 
             matrix[index] = {
-                piecesA: allItems.slice(0, 5),
-                piecesB: allItems.slice(5, 10),
-                piecesC: allItems.slice(10, 15),
-                piecesD: allItems.slice(15, 20),
+                piecesA: items.slice(0, 5),
+                piecesB: items.slice(5, 10),
+                piecesC: items.slice(10, 15),
+                piecesD: items.slice(15, 20),
                 index: `${index}`,
+                selected: index === this.selected,
             };
         });
+        console.log(matrix);
         this.setStateValues(this.matrixToAreas(matrix));
     }
 
