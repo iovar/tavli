@@ -1,26 +1,28 @@
-int check_opaction(GLint positionMatrix[24][6],
-			int moves[2],
-			int dice[2],
-			int previous,
-			int next,
-			int   *ophit,
-			int   *opout,
-			int game)
-{
-    int doubles=0;
+/* int check_opaction(GLint positionMatrix[24][6], */
+			/* int moves[2], */
+			/* int dice[2], */
+			/* int previous, */
+			/* int next, */
+			/* int   *ophit, */
+			/* int   *opout, */
+			/* int game) */
+export function check_opaction(props) {
+    const { positionMatrix, moves, dice, previous, next, ophit, opout, game } = props
+
+    let doubles=0;
     if (dice[0]==dice[1])
         doubles=1;
 
 
-    if((*ophit>=1)||(previous==-1))
+    if(ophit>=1||(previous==-1))
     {
         if(previous!=-1)//called by takein
             return 0;
-        if((*ophit)==0)//mistake call by takein
+        if(ophit==0)//mistake call by takein
             return 0;
 
 
-        int d;
+        let d;
         for(d=0;d<2;d++)
         {
             if(moves[d]<1+doubles)
@@ -47,18 +49,18 @@ int check_opaction(GLint positionMatrix[24][6],
     if(next==-1)//caled by takeout
     {
 
-        int tot=retrieval_area_total(2,positionMatrix);fflush(stdout);
+        let tot=retrieval_area_total(2,positionMatrix);fflush(stdout);
 
-        if((tot+(*opout)!=15))
+        if((tot+opout!=15))
         {
             return 0;
         }
         else
         {
 
-            int empty=empty_positions(2,positionMatrix);
+            let empty=empty_positions(2,positionMatrix);
 
-            int d;
+            let d;
             for(d=0;d<2;d++)
             {
 
@@ -95,13 +97,13 @@ int check_opaction(GLint positionMatrix[24][6],
     if(!check_action(previous,next,3,
             positionMatrix,
             dice,
-            NULL,
+            null,
             moves,
-            NULL,
+            null,
             game
             ))
         return 1;
     else
         return 0;
-    }
+}
 

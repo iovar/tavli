@@ -1,8 +1,7 @@
-int empty_positions(int who,GLint positionMatrix[24][6])
-{
-	int empty=0;
-	int i;
-	
+export function empty_positions(who,positionMatrix) {
+	let empty=0;
+	let i;
+
 	if(who==1)
 	{
 		for(i=18;i<24;i++)
@@ -12,7 +11,7 @@ int empty_positions(int who,GLint positionMatrix[24][6])
 			else
 				break;
 		}
-		
+
 		return empty;
 	}
 
