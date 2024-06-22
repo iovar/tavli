@@ -10,14 +10,15 @@
     <title>Tavli, by Ioannis Varouchakis</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" sizes="144x144" href="icon.png">
+    <link rel="stylesheet" href="css/main.css">
     <script type="module" src="js/register-components.js"></script>
     <style>:not(:defined) { display: none }</style>
 </head>
 <body>
     <div class="root">
-        <board-x data-id="board"></board-x>
-        <dice-x data-id="dice"></dice-x>
-        <menu-x data-board-id="board" data-dice-id="dice"></menu-x>
+        <board-component data-id="board"></board-component>
+        <dice-component data-id="dice"></dice-component>
+        <menu-component data-board-id="board" data-dice-id="dice"></menu-component>
     </div>
     <script>
         if ('serviceWorker' in navigator) {

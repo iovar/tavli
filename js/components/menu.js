@@ -1,25 +1,36 @@
 // vi: ft=html
+import {
+    WAIT_INPUT,
+    ROLL,
+    END,
+    PC_MOVE,
+    BOARD_UPDATE,
+    gameEngine
+} from '../game/engine.js';
+
+// <style>
+const getStyles = () => (`
+    .menu-container {
+        position: fixed;
+        z-index: 3;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        padding: 16px;
+        border-radius: 8px;
+        font-size: large;
+        margin: 20px;
+    }
+`);
+// </style>
+
 function getTemplate({ playing }) { return `
-<style>
-.menu-container {
-    position: fixed;
-    z-index: 3;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-button {
-    padding: 16px;
-    border-radius: 8px;
-    font-size: large;
-    margin: 20px;
-}
-</style>>
-
 ${ playing ? '' : `
 <section class="menu-container">
     <h2>Tavli, by Ioannis Varouchakis</h2>
@@ -32,14 +43,8 @@ ${ playing ? '' : `
 `}
 
 // <script>
-import {
-    WAIT_INPUT,
-    ROLL,
-    END,
-    PC_MOVE,
-    BOARD_UPDATE,
-    gameEngine
-} from '../game/engine.js';
+const styleSheet = new CSSStyleSheet();
+styleSheet.replaceSync(getStyles());
 
 const UPDATE_TIMEOUT = 3000;
 
@@ -55,6 +60,7 @@ export class Menu extends HTMLElement {
 
     connectedCallback() {
         this.shadowRoot.innerHTML = getTemplate(false);
+        this.shadowRoot.adoptedStyleSheets = [...document.adoptedStyleSheets, styleSheet];
     }
 
     startGame(game) {

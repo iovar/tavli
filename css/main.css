@@ -13,31 +13,13 @@ html, body {
 }
 
 .root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+    position: relative;
+
+    height: 100dvh;
+    width: 100dvw;
     background-color: #000;
-    color: #fff;
 }
 
 .hidden {
     display: none !important;
-}
-
-@media (min-aspect-ratio: 4/3) {
-    .root {
-        height: 100%;
-        width: auto;
-    }
-}
-
-@media (max-aspect-ratio: 3/4) {
-    .root {
-        height: 100vw;
-        width: auto;
-        transform: rotate3d(0, 0, 1, -90deg);
-    }
 }
