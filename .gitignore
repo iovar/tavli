@@ -12,3 +12,5 @@ coverage
 # build, dist, etc
 build
 dist
+
+.DS_Store
