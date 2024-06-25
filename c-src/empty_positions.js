@@ -1,4 +1,6 @@
-export function empty_positions(who,positionMatrix) {
+export function empty_positions(props) {
+    const { who,positionMatrix } = props;
+
 	let empty=0;
 	let i;
 

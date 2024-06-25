@@ -1,4 +1,6 @@
-export function fevga_matrix(positionMatrix, dummyMatrix) {
+export function fevga_matrix(props) {
+    const { positionMatrix, dummyMatrix } = props;
+
 	for(let i=11;i>=0;i--) {
 		for(let k=0;k<6;k++) {
 			dummyMatrix[12+i][k]=positionMatrix[23-i][k];

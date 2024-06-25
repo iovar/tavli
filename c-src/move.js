@@ -1,6 +1,7 @@
-int move(GLint positionMatrix[24][6],int previous,int next,int moves[2],int dice[2],int *youhit,int *ophit,int game)
-{
-	
+// int move(GLint positionMatrix[24][6],int previous,int next,int moves[2],int dice[2],int *youhit,int *ophit,int game)
+export function move(props) {
+    const { positionMatrix,previous,next,moves,dice,youhit,ophit,game } = props;
+
 	if(check_opaction(positionMatrix,
 			moves,
 			dice,
@@ -10,7 +11,7 @@ int move(GLint positionMatrix[24][6],int previous,int next,int moves[2],int dice
 			NULL,
 			game
 			))
-	{	
+	{
 		if(!check_action(previous,next,2,
 				positionMatrix,
 				dice,
@@ -49,10 +50,10 @@ int move(GLint positionMatrix[24][6],int previous,int next,int moves[2],int dice
 			}
 			else
 				positionMatrix[next][3]+=1;
-			
+
 			return 1;
 		}
-		
+
 		else return 0;
 	}
 
