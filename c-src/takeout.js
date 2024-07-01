@@ -1,9 +1,10 @@
-int takeout(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],int *opout,int *ophit,int game)
-{
-	int doubles=0;
+// int takeout(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],int *opout,int *ophit,int game)
+export function takeout(props) {
+    const { positionMatrix, position, moves, dice, opout, ophit, game } = props;
+	let doubles=0;
 	if(dice[0]==dice[1])
 		doubles=1;
-	int empty=empty_positions(2,positionMatrix);
+	let empty=empty_positions(2,positionMatrix);
 
 	if(check_opaction(positionMatrix,
 			moves,
@@ -14,8 +15,7 @@ int takeout(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],in
 			opout,
 			game))
 	{
-		int d;
-		for(d=0;d<2;d++)
+		for(let d=0;d<2;d++)
 		{
 			if(moves[d]<1+doubles)
 			{
@@ -34,15 +34,15 @@ int takeout(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],in
 							positionMatrix[position][4]=0;
 					}
 					moves[d]++;
-					(*opout)+=1;
+					props.opout+=1;
 					return 1;
 				}
-					
+
 			}
 		}
 		return 0;
 	}
-	
+
 	else return 0;
 
 }

@@ -1,7 +1,7 @@
-int retrieval_area_total(int who,GLint positionMatrix[24][6])
-{
-	int tot=0;
-	int i;
+export function retrieval_area_total(props) {
+    const  { who, positionMatrix } = props;
+	let tot=0;
+	let i;
 	if(who==1)
 	{
 		for(i=23;i>17;i--)

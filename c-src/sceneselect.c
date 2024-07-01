@@ -1,67 +1,7 @@
-/*********************************************************************************
-*                                 Tavli 3d                                       *
-**********************************************************************************
-*                                                                                *
-*             Copyright (C) 2005  John Varouhakis                                *
-*                                                                                *
-*                                                                                *
-*    This program is free software; you can redistribute it and/or modify        *
-*    it under the terms of the GNU General Public License as published by        *
-*    the Free Software Foundation; either version 2 of the License, or           *
-*    (at your option) any later version.                                         *
-*                                                                                *
-*    This program is distributed in the hope that it will be useful,             *
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of              *
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               *
-*    GNU General Public License for more details.                                *
-*                                                                                *
-*    You should have received a copy of the GNU General Public License           *
-*    along with this program; if not, write to the Free Software                 *
-*    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA   *
-*                                                                                *
-*                                                                                *
-*                                                                                *
-*    For further information contact me at biocrasher@gmail.com                  *
-**********************************************************************************/
 
-
-
-#include    <tavli.h>
-#include    <msound.h>
-#ifndef    HAVE_CONFIG
-    #include    <config.h>
-    #define HAVE_CONFIG 1
-#endif
-
-#ifdef HAVE_FULL
-    #ifndef FULL_COMP 
-    #define FULL_COMP 1
-    #endif
-#else
-    #ifndef FULL_COMP 
-    #define FULL_COMP 0
-    #endif
-#endif
-
-#ifdef HAVE_CHEAT
-    #ifndef CHEAT_MODE 
-    #define CHEAT_MODE 1
-    #endif
-#else
-    #ifndef CHEAT_MODE 
-    #define CHEAT_MODE 0
-    #endif
-#endif
-
-#ifndef MAXMSG
-    #define MAXMSG 512
-#endif
-
-int *getsetscore(int *score)
-{
-    static int lscore[2]={0,0};
-    if(score==NULL)
-        return lscore;
+export function getsetscore(currentScore) {
+    if(!score)
+        return [0, 0];
     else
     {
         lscore[0]=score[0];
@@ -282,7 +222,7 @@ int sceneselect(char *HOME,
                         FILE *fp;
                         char *cwd;
                         cwd=getcwd(NULL,0);
-                        chdir(HOME); 
+                        chdir(HOME);
                         fp=fopen(".tavli3d/options","w");
                         if(errno)
                             fprintf(stderr,"\nError:\n %s\n",strerror(errno));
@@ -485,7 +425,7 @@ int sceneselect(char *HOME,
                                 break;
                             }
                             if(quit==10)
-                                quit=0;    
+                                quit=0;
                         }
                     }
                     if((down_==1)&&(select==3))
@@ -711,7 +651,7 @@ int sceneselect(char *HOME,
                             &keycode);
                     console_type(HOME,keycode,sender,NULL,NULL,NULL);
                     if(quitt==10)
-                        quitt=0;    
+                        quitt=0;
 
                     if((quitt==1)||((down_==1)&&(selectiont==3)))
                     {
@@ -1150,7 +1090,7 @@ int sceneselect(char *HOME,
                 quit=4;
                 break;
             }
-            //fixate 
+            //fixate
             if(retrieval_area_total(1,positionMatrix)+(*outYou)>15)
             {
                 int lcr=0;

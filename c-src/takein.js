@@ -1,6 +1,7 @@
-int takein(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],int *youhit,int *ophit,int game)
-{
-	int doubles=0;
+// int takein(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],int *youhit,int *ophit,int game)
+export function takein(props) {
+    const { positionMatrix, position, moves, dice, youhit, ophit, game } = props;
+	let doubles=0;
 	if(dice[0]==dice[1])
 		doubles=1;
 
@@ -13,8 +14,7 @@ int takein(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],int
 			NULL,
 			game))
 	{
-		int d;
-		for(d=0;d<2;d++)
+		for(let d=0;d<2;d++)
 		{
 			if(moves[d]<1+doubles)
 			{
@@ -33,14 +33,13 @@ int takein(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],int
 					else
 						positionMatrix[position][3]+=1;
 					moves[d]++;
-					(*ophit)-=1;
+					props.ophit-=1;
 					return 1;
 				}
-					
+
 			}
 		}
 		return 0;
 	}
 	else return 0;
-
 }
