@@ -1,5 +1,4 @@
-export function retrieval_area_total(props) {
-    const  { who, positionMatrix } = props;
+export function retrieval_area_total(who, positionMatrix) {
 	let tot=0;
 	let i;
 	if(who==1)

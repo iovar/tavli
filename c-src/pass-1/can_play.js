@@ -1,6 +1,8 @@
+import { empty_positions } from './empty_positions.js';
+import { retrieval_area_total } from './retrieval_area_total.js';
+
 // int can_play(int who,int moves[2],GLint positionMatrix[24][6],int dice[2],int hit,int out,int game)
-export function can_play(props) {
-    const { who, moves, positionMatrix, dice, hit, out, game props } = props;
+export function can_play(who, moves, positionMatrix, dice, hit, out, game) {
 
     let ret=0;
     let doubles=0;

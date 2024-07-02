@@ -1,8 +1,5 @@
-
 /* int Action(int pos_,int team_, GLint *hitOp, GLint positionMatrix[24][6], GLint *pouliYUp, int game) */
-export function Action (props) {
-    const { pos_, team_, positionMatrix, game } = props;
-
+export function Action ( pos_, team_, hitOp, positionMatrix, pouliYUp, game ) {
     if(team_==1)
     {
         if(pouliYUp==0)
@@ -22,12 +19,12 @@ export function Action (props) {
                         else
                             positionMatrix[pos_][4]=0;
                     }
-                    props.pouliYUp=1;
-                    return 0;
+                    pouliYUp=1;
+                    return { status: 0,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
                 }
-                else return 1;
+                else return { status: 1,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
         }
-        else if(props.pouliYUp==1)
+        else if(pouliYUp==1)
         {
             if(positionMatrix[pos_][4]==2)
             {
@@ -35,33 +32,33 @@ export function Action (props) {
                 {
                     positionMatrix[pos_][4]=1;
                     if(game==0)
-                        props.hitOp+=1;
+                        hitOp+=1;
                     else if(game==1)
                         positionMatrix[pos_][5]=1;
                     else if(game==2)
-                        return 0;
+                        return { status: 0,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
 
-                    props.pouliYUp=0;
-                    return 0;
+                    pouliYUp=0;
+                    return { status: 0,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
                 }
-                else return 1;
+                return { status: 1,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
             }
             else if(positionMatrix[pos_][4]==0)
             {
                 positionMatrix[pos_][3]=1;
                 positionMatrix[pos_][4]=1;
-                props.pouliYUp=0;
-                return 0;
+                pouliYUp=0;
+                return { status: 0,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
                 }
             else if(positionMatrix[pos_][4]==1)
             {
                 positionMatrix[pos_][3]++;
-                props.pouliYUp=0;
-                return 0;
+                pouliYUp=0;
+                return { status: 0,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
             }
         }
         else
-            return 1;
+            return { status: 1,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
     }
     else if(team_==2)
     {
@@ -69,25 +66,25 @@ export function Action (props) {
         {
             if ((positionMatrix[pos_][3]==1)&&(game!=2))
             {
-                return 3;
+                return { status: 3,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
             }
 
             else if (positionMatrix[pos_][3]>1)
             {
-                return 0;
+                return { status: 0,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
             }
         }
         else if(positionMatrix[pos_][4]==0)
         {
-            return 1;
+            return { status: 1,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
         }
         else if(positionMatrix[pos_][4]==2)
         {
-            return 2;
+            return { status: 2,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
         }
 
 
         else
-            return 0;
+            return { status: 0,  pos_, team_, hitOp, positionMatrix, pouliYUp, game };
     }
 }

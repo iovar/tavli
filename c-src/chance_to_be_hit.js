@@ -1,7 +1,5 @@
 // int chance_to_be_hit(GLint positionMatrix[24][6],int position,int hitOp,int game)
-export function chance_to_be_hit(props) {
-    const { positionMatrix, position, hitOp, game } = props;
-
+export function chance_to_be_hit(positionMatrix, position, hitOp, game) {
 	let who;
 	let chance=0;
 	//check who called and if no calculating is needed
@@ -61,8 +59,6 @@ export function chance_to_be_hit(props) {
 
 			chance=0;
 		}
-
-// 		chance=(chance*(24-position))/100+1;
 
 		return chance;
 	}

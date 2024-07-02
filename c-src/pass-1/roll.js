@@ -1,5 +1,4 @@
-// void roll(int dice[2])
-export function roll(dice) {
+export function roll() {
     // TODO rewrite with crypt
     return [
 		Math.floor(Math.random()*6+1),
