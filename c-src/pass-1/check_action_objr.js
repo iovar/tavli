@@ -6,9 +6,8 @@
 		/* int   *turn */
 		/* ,int game */
 		/* ) */
-
-export function check_action(props) {
-	const { Last_, New_, team_, positionMatrix, dice, moves, opmoves, turn, game } = props;
+// TODO return only turn and status
+export function check_action( Last_, New_, team_, positionMatrix, dice, moves, opmoves, turn, game ) {
 	let k=1;
 	let doubles=0;
 	if (dice[0]==dice[1])
@@ -19,7 +18,7 @@ export function check_action(props) {
 		{
 			if(((positionMatrix[New_][4]==2)
 					&&((positionMatrix[New_][3]+positionMatrix[New_][5]>1)||(game==2))))
-				return 1;
+                return { status: 1, Last_, New_, team_, positionMatrix, dice, moves, opmoves, turn, game };
 
 			if ((((Last_+dice[0])==New_))&&
 				(((doubles==1)&&(moves[0]<2))||((doubles==0)&&(moves[0]<1))))
@@ -223,11 +222,11 @@ export function check_action(props) {
 			}
 
 			if(!firstpiece)
-				return 1;
+                return { status: 1, Last_, New_, team_, positionMatrix, dice, moves, opmoves, turn, game };
 
 			if((positionMatrix[New_][4]==1)&&
 				((positionMatrix[New_][3]+positionMatrix[New_][5]>1)||(game==2)))
-				return 1;
+                return { status: 1, Last_, New_, team_, positionMatrix, dice, moves, opmoves, turn, game };
 			if ((Last_-dice[0]==New_)&&
 			(opmoves[0]<doubles+1))
 			{
@@ -251,11 +250,11 @@ export function check_action(props) {
 			opmoves[1]=0;
 			dice[0]=0;
 			dice[1]=0;
-			props.turn = abs(turn-1);
+			turn = Math.abs(turn-1);
 
 		}
 
-	return k;
+	return { status: k, Last_, New_, team_, positionMatrix, dice, moves, opmoves, turn, game };
 };
 
 

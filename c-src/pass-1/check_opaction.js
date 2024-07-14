@@ -1,3 +1,7 @@
+import { check_action } from './check_action.js';
+import { empty_positions } from './empty_positions.js';
+import { retrieval_area_total } from './retrieval_area_total.js';
+
 /* int check_opaction(GLint positionMatrix[24][6], */
 			/* int moves[2], */
 			/* int dice[2], */
@@ -6,9 +10,7 @@
 			/* int   *ophit, */
 			/* int   *opout, */
 			/* int game) */
-export function check_opaction(props) {
-    const { positionMatrix, moves, dice, previous, next, ophit, opout, game } = props
-
+export function check_opaction( positionMatrix, moves, dice, previous, next, ophit, opout, game ) {
     let doubles=0;
     if (dice[0]==dice[1])
         doubles=1;
@@ -68,7 +70,7 @@ export function check_opaction(props) {
                 {
                     if((previous<0)||(previous>23))
                     {
-                        _exit(-1);
+                        throw new Error(-1);
                     }
 
                     if(((previous==5-empty)&&(dice[d]>=(previous+1)))||(previous==dice[d]-1))

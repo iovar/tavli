@@ -125,18 +125,17 @@ const position_NW=[0,1,2,3,4,5,6,7,8,9,10,11,23,22,21,20,19,18,17,16,15,14,13,12
 		// GLfloat *yrot,
 		// Prefs *prefs ,
 		// int game)
-export function initialize(props) {
+export function initialize(positionMatrix, outYou, outOp, hitYou, hitOp, turn, prefs,  game) {
 	let i=0;
-	if(*outOp==15)
-		props.turn=1;
+	if(outOp==15)
+		turn=1;
 	else
-		props.turn=0;
+		turn=0;
 
-	props.outYou=0;
-	props.outOp=0;
-	props.hitYou=0;
-	props.hitOp=0;
-    const { positionMatrix, prefs, game } = props
+	outYou=0;
+	outOp=0;
+	hitYou=0;
+	hitOp=0;
 
 	let upto=6;
 	if(game!=0)
@@ -193,4 +192,6 @@ export function initialize(props) {
 		positionMatrix[12][4]=2;
 
 	}
+
+    return { positionMatrix, outYou, outOp, hitYou, hitOp, turn, prefs,  game };
 }

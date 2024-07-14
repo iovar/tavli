@@ -20,24 +20,18 @@
 
 */
 
-export function input_exec(props) {
-    const { acc_,strafe_,button,gkpr,x_,y_, positionMatrix, outYou, outOp, hitYou, hitOp, turn, dice, moves, opmoves, pouliYUp, res, prefs, game } = props
-
+export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hitOp, turn, dice, moves, opmoves, pouliYUp, prefs, game ) {
 	let LastPos=-1;
 
-	if(positionMatrix==NULL)
-		return LastPos;
-
-	let horiz=res[1];
-	let vertic=res[2];
+	if(!positionMatrix)
+        return { LastPos, button,pos, positionMatrix, outYou, outOp, hitYou, hitOp, turn, dice, moves, opmoves, pouliYUp, prefs, game };
 
 	if(button==1) {
 //***************************************take out************************************************
-			let pos=mouse_position(horiz,vertic,x_,y_,prefs);
-			if((pos==24)&&(props.pouliYUp==1))
+			if((pos==24)&&(pouliYUp==1))
 			{
 				let tot=retrieval_area_total(1,positionMatrix);
-				if((tot+props.outYou==14)&&(LastPos>=18))
+				if((tot+outYou==14)&&(LastPos>=18))
 				{
 					let doubles=0;
 					let d;
@@ -60,8 +54,8 @@ export function input_exec(props) {
 							((LastPos==18+empty)&&(LastPos>=(24-dice[d]))))
 							{
                                 console.log('#TAKEOUT:', (LastPos-LastPos%10)/10,LastPos%10,'\n');
-								props.outYou+=1;
-								props.pouliYUp=0;
+								outYou+=1;
+								pouliYUp=0;
 								moves[d]++;
 								LastPos=-1;
 								break;
@@ -71,7 +65,7 @@ export function input_exec(props) {
 					if((moves[0]-doubles==1)&&(moves[1]-doubles==1))
 					{
                         console.log('#YOUR_TURN:');
-						props.turn=1;
+						turn=1;
 					}
 
 				}
@@ -81,13 +75,13 @@ export function input_exec(props) {
 
 
 //*********************************normal play **************************************************
-			if ((props.turn==0)&&(props.hitYou==0))
+			if ((turn==0)&&(hitYou==0))
 			{
 				if(pos==24)
 				{
 					pos=LastPos;
 				}
-				if((props.pouliYUp==1))
+				if((pouliYUp==1))
 				{
 					let firstpiece=1;
 					if((game==2)&&(positionMatrix[0][3]==13)&&(positionMatrix[0][4]==1)&&(LastPos==0))
@@ -144,7 +138,7 @@ export function input_exec(props) {
 						positionMatrix,
 						pouliYUp,
 						game);
-					if(props.pouliYUp==0)
+					if(pouliYUp==0)
 					{
 						if((LastPos!=pos)&&(positionMatrix[pos][4]==1)) {
                             console.log('#MOVE:', (pos-pos%10)/10,pos%10,(LastPos-LastPos%10)/10,LastPos%10,'\n');
@@ -152,7 +146,7 @@ export function input_exec(props) {
 						LastPos=-1;
 
 					}
-					if(props.pouliYUp==1)
+					if(pouliYUp==1)
 						LastPos=pos;
 				}
 			}
@@ -160,7 +154,7 @@ export function input_exec(props) {
 //*****************************end normal play **************************************************
 
 //*******************************insert hit *****************************************************
-			else if((props.turn==0)&&(props.hitYou>=1))
+			else if((turn==0)&&(hitYou>=1))
 			{
 				let ymoves=[0,0];
                 let doubles=0;
@@ -184,7 +178,7 @@ export function input_exec(props) {
 				if((k!=-1)&&
 				(!((positionMatrix[pos][4]==2)&&(positionMatrix[pos][3]>1))))
 				{
-					props.pouliYUp=1;
+					pouliYUp=1;
 					if(!Action(pos,1,
 						hitOp,
 						positionMatrix,
@@ -195,21 +189,22 @@ export function input_exec(props) {
 					if(k==0)
 						{
                         console.log('#TAKEIN:', (pos-pos%10)/10,pos%10,'\n');
-						props.hitYou-=1;
+						hitYou-=1;
 						moves[0]+=ymoves[0];
 						moves[1]+=ymoves[1];
 						}
-					props.pouliYUp=0;
+					pouliYUp=0;
 				}
 
 				if((moves[0]-doubles==1)&&(moves[1]-doubles==1))
 				{
 // 					console_writeline(getenv("HOME"),"#YOUR_TURN\n",getenv("USER"));
-					props.turn=1;
+					turn=1;
 				}
 			}
 //***************************end insert hit ****************************************************
 	}
 
+    return { LastPos, button,pos, positionMatrix, outYou, outOp, hitYou, hitOp, turn, dice, moves, opmoves, pouliYUp, prefs, game };
 }
 

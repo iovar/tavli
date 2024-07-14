@@ -9,19 +9,19 @@ export function rate_scenarios(props) {
 	let i=0;
 	let godown=0;
 
-	if(root.down!=null)
-	{	
+	if(root.down)
+	{
 		godown=1;
 		temp=root.down;
 	}
-	else if(root.next!=null)
+	else if(root.next)
 	{
 		temp=root.next;
 	}
-	else 
-	{	
+	else
+	{
 		return root;
-	}	
+	}
 
 	do{
 		let pcpinned=0;
@@ -53,30 +53,30 @@ export function rate_scenarios(props) {
 			if((temp.positionMatrix[i][4]==1)||((temp.positionMatrix[i][4]==2)&&(temp.positionMatrix[i][5]==1)))
 				if(lastop==-1)
 					lastop=i;
-			
+
 			if((temp.positionMatrix[i][4]==1)&&(temp.positionMatrix[i][5]))
 					pcpinned+=i;
-			
+
 			if((temp.positionMatrix[i][4]==2))
 			{
 				fevga_adv+=24-i;
 				total_fevga++;
 				if(temp.positionMatrix[i][5])
 					yourpinned+=24-i;
-				
+
 				let to_be_hit=chance_to_be_hit(temp.positionMatrix,i,temp.specs.hitYou);
 				firstyours=i;
-				
+
 				let pieces=temp.positionMatrix[i][3];
-				
+
 				if(game==0)
 					to_be_hit=(to_be_hit*(24-i))/100+1;
 				else if(game==1)
 					to_be_hit=(to_be_hit*(i+1))/100+1;
 				else if(game==2)
 					to_be_hit=0;
-				
-				
+
+
 				assert(!isnan(pieces));
 				advancement+=temp.specs.outOp*25;
 				if(i<6)
@@ -85,16 +85,16 @@ export function rate_scenarios(props) {
 					advancement-=10*pieces;
 				else if(i<18)
 					advancement-=20*pieces;
-				else 
+				else
 				{
 					if((entr_closed<4)&&(to_be_hit<=50))
 						advancement-=100*(i*pieces);
 					else
 						advancement-=70*(i*pieces);
 				}
-				
+
 				assert(!isnan(advancement));
-				
+
 			}
 			if((temp.positionMatrix[i][4]==2)&&
 			(temp.positionMatrix[i][3]==1)&&(temp.positionMatrix[i][5]==0))
@@ -133,7 +133,7 @@ export function rate_scenarios(props) {
 				total_retr_area+=temp.positionMatrix[i][3];
 				if(enemy_seen)
 					free_gather=0;
-			}	
+			}
 			if((temp.positionMatrix[i][4]==2)&&
 			((temp.positionMatrix[i][3]+temp.positionMatrix[i][5]>1)||(game==2)))
 				retr_closed+=1;
@@ -173,7 +173,7 @@ export function rate_scenarios(props) {
 				rating+=(retr_closed-entr_closed)*hitchance;
 			//retrieval - entry simple criterion
 			rating+=(retr_closed-entr_closed)*20;
-			
+
 			//hit op criterion
 			if(temp.specs.hitOp>0)
 				rating-=temp.specs.hitOp*100;
@@ -206,13 +206,13 @@ export function rate_scenarios(props) {
 			{
 				if((temp.specs.hitYou<=0)&&(free_gather)&&(total_retr_area+temp.specs.outOp==15)&&(temp.specs.outOp>0))
 					{
-					rating+=((temp.specs.outOp+1)*5000)*10;//quick gather 
-					
+					rating+=((temp.specs.outOp+1)*5000)*10;//quick gather
+
 					}
 				else
-					rating+=temp.specs.outOp*5;	
-					
-					
+					rating+=temp.specs.outOp*5;
+
+
 			}
 		}
 
@@ -224,7 +224,7 @@ export function rate_scenarios(props) {
 				if((temp.positionMatrix[count][3]==1)&&(temp.positionMatrix[count][4]==2)&&(temp.positionMatrix[count][5]==0))
 					rating-=pow(10,(7-count));
 			}
-			
+
 			for(count=23;count>17;count--)
 			{
 				if((temp.positionMatrix[count][4]==2)&&(temp.positionMatrix[count][5]==1))
@@ -236,7 +236,7 @@ export function rate_scenarios(props) {
 		}
 		if((game==1)||(game==2))
 		{
-			
+
 			//close corners 18 17 12 11 6 5
 			if(((temp.positionMatrix[18][3]+temp.positionMatrix[18][5]>1)||(game==2))&&(temp.positionMatrix[18][4]==2))
 				rating+=(game==1)?100:100;
@@ -279,13 +279,13 @@ export function rate_scenarios(props) {
 				rating+=1000000;
 
 		}
-		
+
 
 
 
 		assert(!isnan(rating));
 		temp.specs.rating=rating;
-		if(best==null)
+		if(!best)
 			best=temp;
 		else if(temp.specs.rating>=best.specs.rating)
 			best=temp;
@@ -293,7 +293,7 @@ export function rate_scenarios(props) {
 			temp=temp.down;
 		else
 			temp=temp.next;
-	}while(temp!=null);
+	}while(temp);
 
 	return best;
 

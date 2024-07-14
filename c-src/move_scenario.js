@@ -32,7 +32,7 @@ export function move_scenario(props) {
 			let dummyMatrix=Array.from({ length: 24 }, () => Array.from({ length: 6 }));
 			if(suppose_takein(positionMatrix,dummyMatrix,i,moves,dice,&hitYou,&hitOp,game))
 			{
-				if(Last==null)
+				if(!Last)
 				{
 					let k;
 					let j;
@@ -113,7 +113,7 @@ export function move_scenario(props) {
 			if(suppose_takeout(positionMatrix,dummyMatrix,i,moves,dice,outOp,hitOp,game))
 			{
 
-				if(Last==null)
+				if(!Last)
 				{
 					let k;
 					let j;
@@ -195,7 +195,7 @@ export function move_scenario(props) {
                     let dummyMatrix=Array.from({ length: 24 }, () => Array.from({ length: 6 }));
 					if(suppose_move(positionMatrix,dummyMatrix,i,i-dice[d],moves,dice,&hitYou,&hitOp,game))
 					{
-						if(Last==null)
+						if(!Last)
 						{
 	// 						root=(Scenario *)malloc((sizeof(struct scenario)));
 							let k;
