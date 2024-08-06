@@ -193,7 +193,9 @@ export function move_scenario(props) {
 					let outYou=moutYou;
 
                     let dummyMatrix=Array.from({ length: 24 }, () => Array.from({ length: 6 }));
-					if(suppose_move(positionMatrix,dummyMatrix,i,i-dice[d],moves,dice,&hitYou,&hitOp,game))
+                    const { result, hitYou } = suppose_move(positionMatrix,dummyMatrix,i,i-dice[d],moves,dice,mhitYou,hitOp,game);
+
+					if(result)
 					{
 						if(!Last)
 						{

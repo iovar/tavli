@@ -1,6 +1,7 @@
 // int move(GLint positionMatrix[24][6],int previous,int next,int moves[2],int dice[2],int *youhit,int *ophit,int game)
 export function move(props) {
     const { positionMatrix,previous,next,moves,dice,youhit,ophit,game } = props;
+    let hit = youhit;
 
 	if(check_opaction(positionMatrix,
 			moves,
@@ -36,11 +37,11 @@ export function move(props) {
 			if((positionMatrix[next][4]==1)&&(positionMatrix[next][5]==0))
 			{
 				if(game==0)
-					(*youhit)+=1;
+					hit+=1;
 				else if(game==1)
 					positionMatrix[next][5]=1;
 				else if(game==2)
-					return 0;
+					return { result: 0, hit };
 				positionMatrix[next][4]=2;
 			}
 			else if(positionMatrix[next][4]==0)
@@ -51,11 +52,11 @@ export function move(props) {
 			else
 				positionMatrix[next][3]+=1;
 
-			return 1;
+            return { result: 1, hit };
 		}
 
-		else return 0;
+		else return { result: 0, hit };
 	}
 
-	else return 0;
+    else return { result: 0, hit };
 }

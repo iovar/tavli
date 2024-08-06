@@ -14,13 +14,14 @@ export copy_matrix(positionMatrix,dummyMatrix) {
 export function suppose_move(props) {
     const { positionMatrix, dummyMatrix, position, moves, dice, youhit, ophit, game } = props;
 	copy_matrix(positionMatrix,dummyMatrix);
-	if(move(dummyMatrix,previous,next,moves,dice,youhit,ophit,game))
+    const { result, hit } = move(dummyMatrix,previous,next,moves,dice,youhit,ophit,game);
+	if(result)
 	{
-		return 1;
+		return { result: 1, hit };
 	}
 	else
 	{
-		return 0;
+		return { result: 0, hit };
 	}
 }
 

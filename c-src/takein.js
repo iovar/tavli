@@ -11,7 +11,7 @@ export function takein(props) {
 			-1,
 			position,
 			ophit,
-			NULL,
+			null,
 			game))
 	{
 		for(let d=0;d<2;d++)
