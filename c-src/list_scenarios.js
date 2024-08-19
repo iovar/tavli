@@ -122,7 +122,4 @@ export function list_scenarios( positionMatrix, dice, mmoves, hitOp, hitYou, out
 		temp=temp.next;
 
 	}while(temp);
-
-
-
 }

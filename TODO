@@ -4,3 +4,16 @@
 - game engine
 - unload protection
 - copy back lib, link
+
+
+Game engine:
+- check all pointer values for .value
+- hit/outYou/Op -> hitP1 / hitP2 / outP1 / outP2
+- pouliYup -> upP1
+- function name rules: camelCase
+- imports
+- remove weird repeated code
+- fix if/else blocks formatting (brackets missing/line)
+- fix space formatting
+- CLI FE
+

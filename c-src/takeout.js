@@ -43,5 +43,4 @@ export function takeout(positionMatrix, position, moves, dice, opout, ophit, gam
 	}
 
 	else return 0;
-
 }

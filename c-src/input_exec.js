@@ -24,14 +24,14 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 	let LastPos=-1;
 
 	if(!positionMatrix)
-        return { LastPos, button,pos, positionMatrix, outYou, outOp, hitYou, hitOp, turn, dice, moves, opmoves, pouliYUp, prefs, game };
+        return LastPos;
 
 	if(button==1) {
 //***************************************take out************************************************
-			if((pos==24)&&(pouliYUp==1))
+			if((pos==24)&&(pouliYUp.value==1))
 			{
 				let tot=retrieval_area_total(1,positionMatrix);
-				if((tot+outYou==14)&&(LastPos>=18))
+				if((tot+outYou.value==14)&&(LastPos>=18))
 				{
 					let doubles=0;
 					let d;
@@ -54,8 +54,8 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 							((LastPos==18+empty)&&(LastPos>=(24-dice[d]))))
 							{
                                 console.log('#TAKEOUT:', (LastPos-LastPos%10)/10,LastPos%10,'\n');
-								outYou+=1;
-								pouliYUp=0;
+								outYou.value +=1;
+								pouliYUp.value = 0;
 								moves[d]++;
 								LastPos=-1;
 								break;
@@ -75,13 +75,13 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 
 
 //*********************************normal play **************************************************
-			if ((turn==0)&&(hitYou==0))
+			if ((turn==0)&&(hitYou.value==0))
 			{
 				if(pos==24)
 				{
 					pos=LastPos;
 				}
-				if((pouliYUp==1))
+				if((pouliYUp.value==1))
 				{
 					let firstpiece=1;
 					if((game==2)&&(positionMatrix[0][3]==13)&&(positionMatrix[0][4]==1)&&(LastPos==0))
@@ -138,7 +138,7 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 						positionMatrix,
 						pouliYUp,
 						game);
-					if(pouliYUp==0)
+					if(pouliYUp.value==0)
 					{
 						if((LastPos!=pos)&&(positionMatrix[pos][4]==1)) {
                             console.log('#MOVE:', (pos-pos%10)/10,pos%10,(LastPos-LastPos%10)/10,LastPos%10,'\n');
@@ -146,7 +146,7 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 						LastPos=-1;
 
 					}
-					if(pouliYUp==1)
+					if(pouliYUp.value==1)
 						LastPos=pos;
 				}
 			}
@@ -154,7 +154,7 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 //*****************************end normal play **************************************************
 
 //*******************************insert hit *****************************************************
-			else if((turn==0)&&(hitYou>=1))
+			else if((turn==0)&&(hitYou.value>=1))
 			{
 				let ymoves=[0,0];
                 let doubles=0;
@@ -178,7 +178,7 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 				if((k!=-1)&&
 				(!((positionMatrix[pos][4]==2)&&(positionMatrix[pos][3]>1))))
 				{
-					pouliYUp=1;
+					pouliYUp.value=1;
 					if(!Action(pos,1,
 						hitOp,
 						positionMatrix,
@@ -189,11 +189,11 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 					if(k==0)
 						{
                         console.log('#TAKEIN:', (pos-pos%10)/10,pos%10,'\n');
-						hitYou-=1;
+						hitYou.value-=1;
 						moves[0]+=ymoves[0];
 						moves[1]+=ymoves[1];
 						}
-					pouliYUp=0;
+					pouliYUp.value=0;
 				}
 
 				if((moves[0]-doubles==1)&&(moves[1]-doubles==1))
@@ -204,7 +204,5 @@ export function input_exec(button,pos, positionMatrix, outYou, outOp, hitYou, hi
 			}
 //***************************end insert hit ****************************************************
 	}
-
-    return { LastPos, button,pos, positionMatrix, outYou, outOp, hitYou, hitOp, turn, dice, moves, opmoves, pouliYUp, prefs, game };
 }
 

@@ -1,5 +1,5 @@
 /* int Action(int pos_,int team_, GLint *hitOp, GLint positionMatrix[24][6], GLint *pouliYUp, int game) */
-export function Action ( pos_, team_, hitOp, positionMatrix, pouliYUp, game ) {
+export function Action (pos_, team_, hitOp, positionMatrix, pouliYUp, game) {
     if(team_==1)
     {
         if(pouliYUp.value==0)
@@ -22,7 +22,7 @@ export function Action ( pos_, team_, hitOp, positionMatrix, pouliYUp, game ) {
                     pouliYUp.value=1;
                     return 0;
                 }
-                else return status;
+                else return 1;
         }
         else if(pouliYUp.value==1)
         {
@@ -32,7 +32,7 @@ export function Action ( pos_, team_, hitOp, positionMatrix, pouliYUp, game ) {
                 {
                     positionMatrix[pos_][4]=1;
                     if(game==0)
-                        hitOp+=1;
+                        hitOp.value+=1;
                     else if(game==1)
                         positionMatrix[pos_][5]=1;
                     else if(game==2)
