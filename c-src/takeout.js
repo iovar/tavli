@@ -1,6 +1,5 @@
 // int takeout(GLint positionMatrix[24][6],int position,int moves[2],int dice[2],int *opout,int *ophit,int game)
-export function takeout(props) {
-    const { positionMatrix, position, moves, dice, opout, ophit, game } = props;
+export function takeout(positionMatrix, position, moves, dice, opout, ophit, game) {
 	let doubles=0;
 	if(dice[0]==dice[1])
 		doubles=1;
@@ -34,7 +33,7 @@ export function takeout(props) {
 							positionMatrix[position][4]=0;
 					}
 					moves[d]++;
-					props.opout+=1;
+					opout.value+=1;
 					return 1;
 				}
 

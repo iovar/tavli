@@ -7,8 +7,7 @@
 	/* int game */
 	/* ) */
 
-export function think(props) {
-    const { positionMatrix,  dice, hitOp, hitYou, outOp, outYou, game } = props;
+export function think(positionMatrix,  dice, hitOp, hitYou, outOp, outYou, game) {
     let dummyMatrix=Array.from({ length: 24 }, () => Array.from({ length: 6 }));
 
 	let mmoves=[0,0];
@@ -24,7 +23,7 @@ export function think(props) {
 		else if(game==2)
 			fevga_matrix(positionMatrix,dummyMatrix);
 
-		if(!can_play(2,mmoves,dummyMatrix,dice,*hitOp,*outOp,game))
+		if(!can_play(2,mmoves,dummyMatrix,dice,hitOp,outOp,game))
 		{
 			break;
 		}
@@ -46,8 +45,8 @@ export function think(props) {
 		}
 		else
 			copy_matrix(best.positionMatrix,positionMatrix);
-		props.hitOp=best.specs.hitOp;
-		props.hitYou=best.specs.hitYou;
+		hitOp.value = best.specs.hitOp.value;
+		hitYou.value =best.specs.hitYou.value;
 		props.outOp=best.specs.outOp;
 		props.outYou=best.specs.outYou;
 		mmoves[0]=best.specs.moves[0];

@@ -1,6 +1,5 @@
 // Scenario *rate_scenarios(Scenario *root,let game)//,Scenario *best)
-export function rate_scenarios(props) {
-    const { root, game } = props;
+export function rate_scenarios(root, game) {
 	let best;
 	let temp;
 	let best_rating =0;
