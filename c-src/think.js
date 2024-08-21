@@ -1,3 +1,4 @@
+
 /* void think(GLint positionMatrix[24][6], */
 /* int dice[2], */
 /* GLint *hitOp, */
@@ -16,9 +17,9 @@ export function think(
   outYou,
   game,
 ) {
-  let dummyMatrix = Array.from({ length: 24 }, () => Array.from({ length: 6 }));
+  const dummyMatrix = Array.from({ length: 24 }, () => Array.from({ length: 6 }));
 
-  let mmoves = [0, 0];
+  const mmoves = [0, 0];
   let doubles = 0;
   let i = 0;
 
@@ -35,7 +36,7 @@ export function think(
     if (!can_play(2, mmoves, dummyMatrix, dice, hitOp, outOp, game)) {
       break;
     }
-    let root = {};
+    const root = {};
     list_scenarios(
       dummyMatrix,
       dice,

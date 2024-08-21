@@ -43,7 +43,7 @@ export function input_exec(
   if (button == 1) {
     //***************************************take out************************************************
     if (pos == 24 && pouliYUp.value == 1) {
-      let tot = retrieval_area_total(1, positionMatrix);
+      const tot = retrieval_area_total(1, positionMatrix);
       if (tot + outYou.value == 14 && LastPos >= 18) {
         let doubles = 0;
         let d;
@@ -62,10 +62,10 @@ export function input_exec(
               (LastPos == 18 + empty && LastPos >= 24 - dice[d])
             ) {
               console.log(
-                "#TAKEOUT:",
+                '#TAKEOUT:',
                 (LastPos - (LastPos % 10)) / 10,
                 LastPos % 10,
-                "\n",
+                '\n',
               );
               outYou.value += 1;
               pouliYUp.value = 0;
@@ -76,7 +76,7 @@ export function input_exec(
           }
         }
         if (moves[0] - doubles == 1 && moves[1] - doubles == 1) {
-          console.log("#YOUR_TURN:");
+          console.log('#YOUR_TURN:');
           turn = 1;
         }
       }
@@ -150,12 +150,12 @@ export function input_exec(
         if (pouliYUp.value == 0) {
           if (LastPos != pos && positionMatrix[pos][4] == 1) {
             console.log(
-              "#MOVE:",
+              '#MOVE:',
               (pos - (pos % 10)) / 10,
               pos % 10,
               (LastPos - (LastPos % 10)) / 10,
               LastPos % 10,
-              "\n",
+              '\n',
             );
           }
           LastPos = -1;
@@ -168,7 +168,7 @@ export function input_exec(
 
     //*******************************insert hit *****************************************************
     else if (turn == 0 && hitYou.value >= 1) {
-      let ymoves = [0, 0];
+      const ymoves = [0, 0];
       let doubles = 0;
       let k = 2;
       if (dice[0] == dice[1]) doubles = 1;
@@ -194,7 +194,7 @@ export function input_exec(
         if (!Action(pos, 1, hitOp, positionMatrix, pouliYUp, game)) k--;
 
         if (k == 0) {
-          console.log("#TAKEIN:", (pos - (pos % 10)) / 10, pos % 10, "\n");
+          console.log('#TAKEIN:', (pos - (pos % 10)) / 10, pos % 10, '\n');
           hitYou.value -= 1;
           moves[0] += ymoves[0];
           moves[1] += ymoves[1];

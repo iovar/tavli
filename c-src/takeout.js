@@ -12,7 +12,7 @@ export function takeout(
   if (dice[0] == dice[1]) {
     doubles = 1;
   }
-  let empty = empty_positions(2, positionMatrix);
+  const empty = empty_positions(2, positionMatrix);
 
   if (
     check_opaction(

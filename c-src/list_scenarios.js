@@ -34,7 +34,7 @@ export function list_scenarios(
   );
 
   if (!root) {
-    console.log("null SCENARIO !!!!\n");
+    console.log('null SCENARIO !!!!\n');
     throw new Error(-1);
   }
 
@@ -44,7 +44,7 @@ export function list_scenarios(
 
   do {
     if (!temp) {
-      console.log("null SCENARIO !!!!\n");
+      console.log('null SCENARIO !!!!\n');
       throw new Error(-1);
     }
 
@@ -99,7 +99,7 @@ export function list_scenarios(
 
   do {
     if (!temp) {
-      console.log("null SCENARIO !!!!\n");
+      console.log('null SCENARIO !!!!\n');
       throw new Error(-1);
     }
 

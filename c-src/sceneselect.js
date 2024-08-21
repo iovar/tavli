@@ -1,3 +1,8 @@
+import { can_play } from './can_play.js';
+import { retrieval_area_total } from './retrieval_area_total.js';
+import { roll } from './roll.js';
+import { think } from './think.js';
+
 /* int sceneselect(char *HOME, */
 /* GLint positionMatrix[24][6], */
 /* GLint *outYou, */
@@ -9,9 +14,9 @@
 /* ) */
 
 let quit = 0;
-let pouliYUp = { value: 0 };
-let moves = [0, 0];
-let opmoves = [0, 0];
+const pouliYUp = { value: 0 };
+const moves = [0, 0];
+const opmoves = [0, 0];
 
 const getEmptyMatrix = () =>
   Array.from({ length: 24 }, () => Array.from({ length: 6 }));
@@ -25,17 +30,17 @@ export function* sceneselect(
   turn = { value: 0 },
   dice = [0, 0],
 ) {
-  let button = 0;
-  let opdice = [0, 0];
-  let game = 0;
-  let prevselection = -5;
-  let pouliwas = 0;
-  let hitwas = 0;
-  let match = 0;
-  let match_type = 0;
-  let match_score = [0, 0];
-  let match_limit = 5;
-  let prev_match_game = 3;
+  const button = 0;
+  const opdice = [0, 0];
+  const game = 0;
+  const prevselection = -5;
+  const pouliwas = 0;
+  const hitwas = 0;
+  const match = 0;
+  const match_type = 0;
+  const match_score = [0, 0];
+  const match_limit = 5;
+  const prev_match_game = 3;
   while (!quit) {
     if (turn.value == 0 && pouliYUp.value == 0) {
       if (!can_play(1, moves, positionMatrix, dice, hitYou, outYou, game)) {
@@ -125,3 +130,5 @@ export function* sceneselect(
 
   return quit;
 }
+
+window.sceneselect = sceneselect;

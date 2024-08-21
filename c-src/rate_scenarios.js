@@ -2,7 +2,7 @@
 export function rate_scenarios(root, game) {
   let best;
   let temp;
-  let best_rating = 0;
+  const best_rating = 0;
   temp = root;
   best = null;
   let i = 0;
@@ -65,7 +65,7 @@ export function rate_scenarios(root, game) {
         );
         firstyours = i;
 
-        let pieces = temp.positionMatrix[i][3];
+        const pieces = temp.positionMatrix[i][3];
 
         if (game == 0) to_be_hit = (to_be_hit * (24 - i)) / 100 + 1;
         else if (game == 1) to_be_hit = (to_be_hit * (i + 1)) / 100 + 1;

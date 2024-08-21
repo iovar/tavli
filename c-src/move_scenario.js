@@ -33,14 +33,14 @@ export function move_scenario(props) {
 
   if (mhitOp.value > 0 && game == 0) {
     for (i = 23; i > 17; i--) {
-      let dice = [mdice[0], mdice[1]];
-      let moves = [mmoves[0], mmoves[1]];
-      let hitOp = { ...mhitOp };
-      let hitYou = { ...mhitYou };
-      let outOp = { ...moutOp };
-      let outYou = { ...moutYou };
+      const dice = [mdice[0], mdice[1]];
+      const moves = [mmoves[0], mmoves[1]];
+      const hitOp = { ...mhitOp };
+      const hitYou = { ...mhitYou };
+      const outOp = { ...moutOp };
+      const outYou = { ...moutYou };
 
-      let dummyMatrix = Array.from({ length: 24 }, () =>
+      const dummyMatrix = Array.from({ length: 24 }, () =>
         Array.from({ length: 6 }),
       );
       if (
@@ -78,7 +78,7 @@ export function move_scenario(props) {
             Last = root;
           }
         } else {
-          let temp = { positionMatrix: getEmptyMatrix() };
+          const temp = { positionMatrix: getEmptyMatrix() };
           let k;
           let j;
           for (k = 0; k < 24; k++)
@@ -108,14 +108,14 @@ export function move_scenario(props) {
   } else {
     for (i = 0; i < 6; i++) {
       if (positionMatrix[i][4] == 1 || positionMatrix[i][4] == 0) continue;
-      let dice = [mdice[0], mdice[1]];
-      let moves = [mmoves[0], mmoves[1]];
-      let hitOp = { ...mhitOp };
-      let hitYou = { ...mhitYou };
-      let outOp = { ...moutOp };
-      let outYou = { ...moutYou };
+      const dice = [mdice[0], mdice[1]];
+      const moves = [mmoves[0], mmoves[1]];
+      const hitOp = { ...mhitOp };
+      const hitYou = { ...mhitYou };
+      const outOp = { ...moutOp };
+      const outYou = { ...moutYou };
 
-      let dummyMatrix = Array.from({ length: 24 }, () =>
+      const dummyMatrix = Array.from({ length: 24 }, () =>
         Array.from({ length: 6 }),
       );
       if (
@@ -153,7 +153,7 @@ export function move_scenario(props) {
             Last = root;
           }
         } else {
-          let temp = {};
+          const temp = {};
           let k;
           let j;
           for (k = 0; k < 24; k++)
@@ -186,14 +186,14 @@ export function move_scenario(props) {
 
       for (let d = 0; d < 2; d++) {
         if (i - mdice[d] >= 0) {
-          let dice = [mdice[0], mdice[1]];
-          let moves = [mmoves[0], mmoves[1]];
-          let hitOp = { ...mhitOp };
-          let hitYou = { ...mhitYou };
-          let outOp = { ...moutOp };
-          let outYou = { ...moutYou };
+          const dice = [mdice[0], mdice[1]];
+          const moves = [mmoves[0], mmoves[1]];
+          const hitOp = { ...mhitOp };
+          const hitYou = { ...mhitYou };
+          const outOp = { ...moutOp };
+          const outYou = { ...moutYou };
 
-          let dummyMatrix = Array.from({ length: 24 }, () =>
+          const dummyMatrix = Array.from({ length: 24 }, () =>
             Array.from({ length: 6 }),
           );
           if (
@@ -233,7 +233,7 @@ export function move_scenario(props) {
                 Last = root;
               }
             } else {
-              let temp = { positionMatrix: getEmptyMatrix() };
+              const temp = { positionMatrix: getEmptyMatrix() };
               let k;
               let j;
               for (k = 0; k < 24; k++)

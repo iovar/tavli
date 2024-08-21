@@ -1,5 +1,5 @@
-import { empty_positions } from "./empty_positions.js";
-import { retrieval_area_total } from "./retrieval_area_total.js";
+import { empty_positions } from './empty_positions.js';
+import { retrieval_area_total } from './retrieval_area_total.js';
 
 // int can_play(int who,int moves[2],GLint positionMatrix[24][6],int dice[2],int hit,int out,int game)
 export function can_play(who, moves, positionMatrix, dice, hit, out, game) {
@@ -46,7 +46,7 @@ export function can_play(who, moves, positionMatrix, dice, hit, out, game) {
     return ret;
   }
 
-  let total = 0;
+  const total = 0;
   /*normal check*/
   for (let i = 0; i < 24; i++) {
     if (
@@ -111,9 +111,9 @@ export function can_play(who, moves, positionMatrix, dice, hit, out, game) {
   /*take out check*/
   if (!ret) {
     //if there is already an action available
-    let tot = retrieval_area_total(who, positionMatrix);
+    const tot = retrieval_area_total(who, positionMatrix);
     if (tot + out == 15) {
-      let empty = empty_positions(who, positionMatrix);
+      const empty = empty_positions(who, positionMatrix);
 
       let d;
       for (d = 0; d < 2; d++) {

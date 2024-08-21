@@ -31,7 +31,7 @@ export function chance_to_be_hit(positionMatrix, position, hitOp, game) {
         blocked += 1;
       }
       if (positionMatrix[i][4] == 1 && blocked < 6) {
-        let tchance = (6 - position + i - blocked + 2) * 278;
+        const tchance = (6 - position + i - blocked + 2) * 278;
         if (tchance > 0) {
           chance += 1667 + tchance;
         }
@@ -42,7 +42,7 @@ export function chance_to_be_hit(positionMatrix, position, hitOp, game) {
         return chance;
       }
       if (positionMatrix[i][4] == 1 && blocked < 6) {
-        let tchance = (13 - (position - i) - blocked + 2) * 278;
+        const tchance = (13 - (position - i) - blocked + 2) * 278;
         if (tchance > 0) {
           chance += tchance;
         }

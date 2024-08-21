@@ -1,6 +1,6 @@
-import { check_action } from "./check_action.js";
-import { empty_positions } from "./empty_positions.js";
-import { retrieval_area_total } from "./retrieval_area_total.js";
+import { check_action } from './check_action.js';
+import { empty_positions } from './empty_positions.js';
+import { retrieval_area_total } from './retrieval_area_total.js';
 
 /* int check_opaction(GLint positionMatrix[24][6], */
 /* int moves[2], */
@@ -60,13 +60,13 @@ export function check_opaction(
 
   if (next == -1) {
     //caled by takeout
-    let tot = retrieval_area_total(2, positionMatrix);
+    const tot = retrieval_area_total(2, positionMatrix);
     fflush(stdout);
 
     if (tot + opout != 15) {
       return 0;
     } else {
-      let empty = empty_positions(2, positionMatrix);
+      const empty = empty_positions(2, positionMatrix);
 
       let d;
       for (d = 0; d < 2; d++) {
