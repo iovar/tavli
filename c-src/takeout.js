@@ -9,7 +9,7 @@ export function takeout(
   game,
 ) {
   let doubles = 0;
-  if (dice[0] == dice[1]) {
+  if (dice[0] === dice[1]) {
     doubles = 1;
   }
   const empty = empty_positions(2, positionMatrix);
@@ -29,12 +29,12 @@ export function takeout(
     for (let d = 0; d < 2; d++) {
       if (moves[d] < 1 + doubles) {
         if (
-          (position == 5 - empty && dice[d] >= position + 1) ||
-          position == dice[d] - 1
+          (position === 5 - empty && dice[d] >= position + 1) ||
+          position === dice[d] - 1
         ) {
           positionMatrix[position][3]--;
-          if (positionMatrix[position][3] == 0) {
-            if (game == 1 && positionMatrix[position][5] == 1) {
+          if (positionMatrix[position][3] === 0) {
+            if (game === 1 && positionMatrix[position][5] === 1) {
               positionMatrix[position][5] = 0;
               positionMatrix[position][4] = 1;
               positionMatrix[position][3] = 1;

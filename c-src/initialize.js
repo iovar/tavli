@@ -148,7 +148,7 @@ export function initialize(
   game,
 ) {
   let i = 0;
-  if (outOp.value == 15) {
+  if (outOp.value === 15) {
     turn = { value: 1 };
   } else {
     turn = { value: 0 };
@@ -160,45 +160,45 @@ export function initialize(
   hitOp = { value: 0 };
 
   let upto = 6;
-  if (game != 0) {
+  if (game !== 0) {
     upto = 3;
   }
 
   let k = 0;
   for (i = 0; i < 24; i++) {
-    if (prefs.playerside[game] == 0) {
+    if (prefs.playerside[game] === 0) {
       prefs.position[i] = position_SW[i];
-    } else if (prefs.playerside[game] == 1) {
+    } else if (prefs.playerside[game] === 1) {
       prefs.position[i] = position_SE[i];
-    } else if (prefs.playerside[game] == 2) {
+    } else if (prefs.playerside[game] === 2) {
       prefs.position[i] = position_NE[i];
-    } else if (prefs.playerside[game] == 3) {
+    } else if (prefs.playerside[game] === 3) {
       prefs.position[i] = position_NW[i];
     }
     for (k = 0; k < upto; k++) {
-      if (prefs.playerside[game] == 0) {
+      if (prefs.playerside[game] === 0) {
         positionMatrix[i][k] = positionMatrix_SW[i][k];
-      } else if (prefs.playerside[game] == 1) {
+      } else if (prefs.playerside[game] === 1) {
         positionMatrix[i][k] = positionMatrix_SE[i][k];
-      } else if (prefs.playerside[game] == 2) {
+      } else if (prefs.playerside[game] === 2) {
         positionMatrix[i][k] = positionMatrix_NE[i][k];
-      } else if (prefs.playerside[game] == 3) {
+      } else if (prefs.playerside[game] === 3) {
         positionMatrix[i][k] = positionMatrix_NW[i][k];
       }
     }
-    if (upto != 6) {
+    if (upto !== 6) {
       positionMatrix[i][3] = 0;
       positionMatrix[i][4] = 0;
       positionMatrix[i][5] = 0;
     }
   }
 
-  if (game == 1) {
+  if (game === 1) {
     positionMatrix[0][3] = 15;
     positionMatrix[0][4] = 1;
     positionMatrix[23][3] = 15;
     positionMatrix[23][4] = 2;
-  } else if (game == 2) {
+  } else if (game === 2) {
     positionMatrix[0][3] = 15;
     positionMatrix[0][4] = 1;
     positionMatrix[12][3] = 15;

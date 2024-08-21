@@ -26,12 +26,12 @@ export function move_scenario(props) {
     game,
   } = props;
   let Last;
-  if (stage == 0) Last = null;
+  if (stage === 0) Last = null;
   else Last = root;
 
   let i = 0;
 
-  if (mhitOp.value > 0 && game == 0) {
+  if (mhitOp.value > 0 && game === 0) {
     for (i = 23; i > 17; i--) {
       const dice = [mdice[0], mdice[1]];
       const moves = [mmoves[0], mmoves[1]];
@@ -107,7 +107,7 @@ export function move_scenario(props) {
     }
   } else {
     for (i = 0; i < 6; i++) {
-      if (positionMatrix[i][4] == 1 || positionMatrix[i][4] == 0) continue;
+      if (positionMatrix[i][4] === 1 || positionMatrix[i][4] === 0) continue;
       const dice = [mdice[0], mdice[1]];
       const moves = [mmoves[0], mmoves[1]];
       const hitOp = { ...mhitOp };
@@ -182,7 +182,7 @@ export function move_scenario(props) {
     }
 
     for (i = 1; i < 24; i++) {
-      if (positionMatrix[i][4] == 1 || positionMatrix[i][4] == 0) continue;
+      if (positionMatrix[i][4] === 1 || positionMatrix[i][4] === 0) continue;
 
       for (let d = 0; d < 2; d++) {
         if (i - mdice[d] >= 0) {

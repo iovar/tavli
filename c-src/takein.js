@@ -9,7 +9,7 @@ export function takein(
   game,
 ) {
   let doubles = 0;
-  if (dice[0] == dice[1]) {
+  if (dice[0] === dice[1]) {
     doubles = 1;
   }
 
@@ -18,11 +18,11 @@ export function takein(
   ) {
     for (let d = 0; d < 2; d++) {
       if (moves[d] < 1 + doubles) {
-        if (24 - dice[d] == position) {
-          if (positionMatrix[position][4] == 1) {
+        if (24 - dice[d] === position) {
+          if (positionMatrix[position][4] === 1) {
             youhit.value += 1;
             positionMatrix[position][4] = 2;
-          } else if (positionMatrix[position][4] == 0) {
+          } else if (positionMatrix[position][4] === 0) {
             positionMatrix[position][4] = 2;
             positionMatrix[position][3] = 1;
           } else {

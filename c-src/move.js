@@ -35,8 +35,8 @@ export function move(
       )
     ) {
       positionMatrix[previous][3]--;
-      if (positionMatrix[previous][3] == 0) {
-        if (game == 1 && positionMatrix[previous][5] == 1) {
+      if (positionMatrix[previous][3] === 0) {
+        if (game === 1 && positionMatrix[previous][5] === 1) {
           positionMatrix[previous][5] = 0;
           positionMatrix[previous][4] = 1;
           positionMatrix[previous][3] = 1;
@@ -44,16 +44,16 @@ export function move(
           positionMatrix[previous][4] = 0;
         }
       }
-      if (positionMatrix[next][4] == 1 && positionMatrix[next][5] == 0) {
-        if (game == 0) {
+      if (positionMatrix[next][4] === 1 && positionMatrix[next][5] === 0) {
+        if (game === 0) {
           youhit.value += 1;
-        } else if (game == 1) {
+        } else if (game === 1) {
           positionMatrix[next][5] = 1;
-        } else if (game == 2) {
+        } else if (game === 2) {
           return 0;
         }
         positionMatrix[next][4] = 2;
-      } else if (positionMatrix[next][4] == 0) {
+      } else if (positionMatrix[next][4] === 0) {
         positionMatrix[next][4] = 2;
         positionMatrix[next][3] = 1;
       } else {

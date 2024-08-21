@@ -3,18 +3,18 @@ export function chance_to_be_hit(positionMatrix, position, hitOp, game) {
   let who;
   let chance = 0;
   //check who called and if no calculating is needed
-  if (positionMatrix[position][4] == 2) {
+  if (positionMatrix[position][4] === 2) {
     who = 2;
-    if (positionMatrix[position][3] >= 2 || positionMatrix[position][5] == 1) {
+    if (positionMatrix[position][3] >= 2 || positionMatrix[position][5] === 1) {
       return 0;
     }
-  } else if (positionMatrix[position][4] == 1) {
+  } else if (positionMatrix[position][4] === 1) {
     return 0;
-  } else if (positionMatrix[position][4] == 0) {
+  } else if (positionMatrix[position][4] === 0) {
     return 0;
   }
 
-  if (who == 2) {
+  if (who === 2) {
     if (!game) {
       if (position >= 0 && position < 6 && hitOp > 0) {
         chance += 1667;
@@ -27,10 +27,10 @@ export function chance_to_be_hit(positionMatrix, position, hitOp, game) {
       if (i < 0) {
         return chance;
       }
-      if (positionMatrix[i][4] == 2 && positionMatrix[i][3] > 1) {
+      if (positionMatrix[i][4] === 2 && positionMatrix[i][3] > 1) {
         blocked += 1;
       }
-      if (positionMatrix[i][4] == 1 && blocked < 6) {
+      if (positionMatrix[i][4] === 1 && blocked < 6) {
         const tchance = (6 - position + i - blocked + 2) * 278;
         if (tchance > 0) {
           chance += 1667 + tchance;
@@ -41,7 +41,7 @@ export function chance_to_be_hit(positionMatrix, position, hitOp, game) {
       if (i < 0) {
         return chance;
       }
-      if (positionMatrix[i][4] == 1 && blocked < 6) {
+      if (positionMatrix[i][4] === 1 && blocked < 6) {
         const tchance = (13 - (position - i) - blocked + 2) * 278;
         if (tchance > 0) {
           chance += tchance;

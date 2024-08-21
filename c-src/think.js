@@ -1,4 +1,3 @@
-
 /* void think(GLint positionMatrix[24][6], */
 /* int dice[2], */
 /* GLint *hitOp, */
@@ -17,19 +16,21 @@ export function think(
   outYou,
   game,
 ) {
-  const dummyMatrix = Array.from({ length: 24 }, () => Array.from({ length: 6 }));
+  const dummyMatrix = Array.from({ length: 24 }, () =>
+    Array.from({ length: 6 }),
+  );
 
   const mmoves = [0, 0];
   let doubles = 0;
   let i = 0;
 
-  if (dice[0] == dice[1]) {
+  if (dice[0] === dice[1]) {
     doubles = 1;
   }
   for (i = 0; i < doubles + 1; i++) {
-    if (game == 0 || game == 1) {
+    if (game === 0 || game === 1) {
       copy_matrix(positionMatrix, dummyMatrix);
-    } else if (game == 2) {
+    } else if (game === 2) {
       fevga_matrix(positionMatrix, dummyMatrix);
     }
 
@@ -50,7 +51,7 @@ export function think(
     );
     let best = {};
     best = rate_scenarios(root, game);
-    if (game == 2) {
+    if (game === 2) {
       fevga_matrix(best.positionMatrix, positionMatrix);
     } else {
       copy_matrix(best.positionMatrix, positionMatrix);

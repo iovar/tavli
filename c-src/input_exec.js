@@ -40,32 +40,32 @@ export function input_exec(
 
   if (!positionMatrix) return LastPos;
 
-  if (button == 1) {
+  if (button === 1) {
     //***************************************take out************************************************
-    if (pos == 24 && pouliYUp.value == 1) {
+    if (pos === 24 && pouliYUp.value === 1) {
       const tot = retrieval_area_total(1, positionMatrix);
-      if (tot + outYou.value == 14 && LastPos >= 18) {
+      if (tot + outYou.value === 14 && LastPos >= 18) {
         let doubles = 0;
         let d;
-        if (dice[1] == dice[0]) doubles = 1;
+        if (dice[1] === dice[0]) doubles = 1;
 
         let empty = empty_positions(1, positionMatrix);
         let jum;
         for (jum = 0; jum < 5 && LastPos + jum < 24; jum++) {
-          if (positionMatrix[LastPos + jum][4] != 1) empty -= 1;
+          if (positionMatrix[LastPos + jum][4] !== 1) empty -= 1;
           else break;
         }
         for (d = 0; d < 2; d++) {
           if (moves[d] < 1 + doubles) {
             if (
-              LastPos == 24 - dice[d] ||
-              (LastPos == 18 + empty && LastPos >= 24 - dice[d])
+              LastPos === 24 - dice[d] ||
+              (LastPos === 18 + empty && LastPos >= 24 - dice[d])
             ) {
               console.log(
-                '#TAKEOUT:',
+                "#TAKEOUT:",
                 (LastPos - (LastPos % 10)) / 10,
                 LastPos % 10,
-                '\n',
+                "\n",
               );
               outYou.value += 1;
               pouliYUp.value = 0;
@@ -75,8 +75,8 @@ export function input_exec(
             }
           }
         }
-        if (moves[0] - doubles == 1 && moves[1] - doubles == 1) {
-          console.log('#YOUR_TURN:');
+        if (moves[0] - doubles === 1 && moves[1] - doubles === 1) {
+          console.log("#YOUR_TURN:");
           turn = 1;
         }
       }
@@ -84,47 +84,47 @@ export function input_exec(
     //***********************************end take out************************************************
 
     //*********************************normal play **************************************************
-    if (turn == 0 && hitYou.value == 0) {
-      if (pos == 24) {
+    if (turn === 0 && hitYou.value === 0) {
+      if (pos === 24) {
         pos = LastPos;
       }
-      if (pouliYUp.value == 1) {
+      if (pouliYUp.value === 1) {
         let firstpiece = 1;
         if (
-          game == 2 &&
-          positionMatrix[0][3] == 13 &&
-          positionMatrix[0][4] == 1 &&
-          LastPos == 0
+          game === 2 &&
+          positionMatrix[0][3] === 13 &&
+          positionMatrix[0][4] === 1 &&
+          LastPos === 0
         ) {
           firstpiece = 0;
           let fevgcount;
           for (fevgcount = 12; fevgcount <= 23; fevgcount++)
-            if (positionMatrix[fevgcount][4] == 1) {
+            if (positionMatrix[fevgcount][4] === 1) {
               firstpiece = 1;
               break;
             }
         }
         if (
-          game == 2 &&
+          game === 2 &&
           pos >= 0 &&
           pos < 6 &&
-          positionMatrix[pos][4] == 0 &&
+          positionMatrix[pos][4] === 0 &&
           firstpiece
         ) {
           firstpiece = 0;
           for (let fevgcount = 5; fevgcount >= 0; fevgcount--)
             if (
-              positionMatrix[fevgcount][4] == 0 ||
-              positionMatrix[fevgcount][4] == 2
+              positionMatrix[fevgcount][4] === 0 ||
+              positionMatrix[fevgcount][4] === 2
             ) {
-              if (fevgcount == pos) continue;
+              if (fevgcount === pos) continue;
               firstpiece = 1;
               break;
             }
         }
-        if (game != 2 || firstpiece) {
+        if (game !== 2 || firstpiece) {
           if (
-            positionMatrix[pos][4] == 2 &&
+            positionMatrix[pos][4] === 2 &&
             positionMatrix[pos][3] + positionMatrix[pos][5] > 1
           )
             pos = LastPos;
@@ -145,56 +145,56 @@ export function input_exec(
           }
         } else pos = LastPos;
       }
-      if (pos != 24) {
+      if (pos !== 24) {
         Action(pos, 1, hitOp, positionMatrix, pouliYUp, game);
-        if (pouliYUp.value == 0) {
-          if (LastPos != pos && positionMatrix[pos][4] == 1) {
+        if (pouliYUp.value === 0) {
+          if (LastPos !== pos && positionMatrix[pos][4] === 1) {
             console.log(
-              '#MOVE:',
+              "#MOVE:",
               (pos - (pos % 10)) / 10,
               pos % 10,
               (LastPos - (LastPos % 10)) / 10,
               LastPos % 10,
-              '\n',
+              "\n",
             );
           }
           LastPos = -1;
         }
-        if (pouliYUp.value == 1) LastPos = pos;
+        if (pouliYUp.value === 1) LastPos = pos;
       }
     }
 
     //*****************************end normal play **************************************************
 
     //*******************************insert hit *****************************************************
-    else if (turn == 0 && hitYou.value >= 1) {
+    else if (turn === 0 && hitYou.value >= 1) {
       const ymoves = [0, 0];
       let doubles = 0;
       let k = 2;
-      if (dice[0] == dice[1]) doubles = 1;
+      if (dice[0] === dice[1]) doubles = 1;
       if (
-        dice[0] == 1 + pos &&
-        ((doubles == 1 && moves[0] < 2) || (doubles == 0 && moves[0] < 1))
+        dice[0] === 1 + pos &&
+        ((doubles === 1 && moves[0] < 2) || (doubles === 0 && moves[0] < 1))
       ) {
         ymoves[0]++;
         k--;
       } else if (
-        dice[1] == 1 + pos &&
-        ((doubles == 1 && moves[1] < 2) || (doubles == 0 && moves[1] < 1))
+        dice[1] === 1 + pos &&
+        ((doubles === 1 && moves[1] < 2) || (doubles === 0 && moves[1] < 1))
       ) {
         ymoves[1]++;
         k--;
       } else k = -1;
 
       if (
-        k != -1 &&
-        !(positionMatrix[pos][4] == 2 && positionMatrix[pos][3] > 1)
+        k !== -1 &&
+        !(positionMatrix[pos][4] === 2 && positionMatrix[pos][3] > 1)
       ) {
         pouliYUp.value = 1;
         if (!Action(pos, 1, hitOp, positionMatrix, pouliYUp, game)) k--;
 
-        if (k == 0) {
-          console.log('#TAKEIN:', (pos - (pos % 10)) / 10, pos % 10, '\n');
+        if (k === 0) {
+          console.log("#TAKEIN:", (pos - (pos % 10)) / 10, pos % 10, "\n");
           hitYou.value -= 1;
           moves[0] += ymoves[0];
           moves[1] += ymoves[1];
@@ -202,7 +202,7 @@ export function input_exec(
         pouliYUp.value = 0;
       }
 
-      if (moves[0] - doubles == 1 && moves[1] - doubles == 1) {
+      if (moves[0] - doubles === 1 && moves[1] - doubles === 1) {
         // 					console_writeline(getenv("HOME"),"#YOUR_TURN\n",getenv("USER"));
         turn = 1;
       }
