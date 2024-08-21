@@ -13,7 +13,4 @@ Game engine:
 - function name rules: camelCase
 - imports
 - remove weird repeated code
-- fix if/else blocks formatting (brackets missing/line)
-- fix space formatting
 - CLI FE
-
