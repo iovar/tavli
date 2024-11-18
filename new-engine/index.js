@@ -73,6 +73,7 @@ const config = {
 //  - scene: main menu, start game, start match, options, credits
 const SCENES = {
     menu: {
+        scene: 'menu',
         actions: [
             { value: 'scene:options', label: 'Options' },
             { value: 'scene:start_game', label: 'Start Game' },
@@ -81,15 +82,18 @@ const SCENES = {
         ],
     },
     options: {
+        scene: 'options',
         actions: [
             // get options from UI config
             { value: 'scene:menu', label: 'Back' },
         ],
     },
     credits: {
+        scene: 'credits',
         actions: [ { value: 'scene:menu', label: 'Back' } ],
     },
     start_game: {
+        scene: 'start_game',
         actions: [
             { value: 'scene:game:portes', label: 'Portes' },
             { value: 'scene:game:plakoto', label: 'Plakoto' },
@@ -98,6 +102,7 @@ const SCENES = {
         ],
     },
     start_match: {
+        scene: 'start_match',
         actions: [
             { value: 'scene:game:match:3', label: '3 Points' },
             { value: 'scene:game:match:5', label: '5 Points' },
@@ -107,33 +112,38 @@ const SCENES = {
         ],
     },
     game: {
-        value: 'game',
-        label: 'Game',
-        actions: {
-            { value: 'action:roll:0' },
-            { value: 'action:roll:1' },
-            { value: 'action:select:0', position: 0 }, // position can be arbitrary 0 - 23
-            { value: 'action:select:1' },
-            { value: 'action:move:0', position: 0 },
-            { value: 'action:move:1' },
+        scene: 'game:single', // or game:match
+        // for the game, actions should be generated on every turn
+        actions: [
+            { value: 'action:roll' },
+            { value: 'action:select', position: 0, team: 0 }, // position can be arbitrary 0 - 23
+            { value: 'action:move', position: 0, team: 0 },
+            { value: 'action:takeout', position: 0, team: 0 },
             { value: 'action:delay', time: 0 }, // time can be arbitrary number of msecs
-
-            { value: 'quit', label: 'Quit' },
+            { value: 'action:quit', label: 'Quit' },
             { value: 'scene:menu', label: 'Yes, quit' },
-        },
+        ],
         state: {
-//  - board: the board state
-//  - players: the players state
-//  - turn: the turn state
-//  - allowed selection
-//  - game: the game state (out, hit, dice, moved played)
-//  - match: the match state
-            board: {
-
-            },
+            turn: 0,
+            allowedPositions: [], // 0 - 24, 24 being out. act different if hit, up, or taking out
+            // 0 - 23, array with team number
+            board: Array.from({ length: 23 }, () => ([])),
             players: [
-                { out: 0, }
-            ]
+                { out: 0, hit: 0, dice: 0, upFrom: 0 /*0 - 23*/ },
+                { out: 0, hit: 0, dice: 0, upFrom: 0 /*0 - 23*/ },
+            ],
+            dice: {
+                rolled: [2, 3],
+                played: [],
+                remaining: [2, 3], // can be more in case of doubles
+                unusable: [],
+            },
+            match: {
+                game: 0, // 0 - 2, portes, plakoto, fevga
+                pointsA: 0,
+                pointsB: 0,
+                goal: 3, // 3, 5, 7, 9
+            },
         }
     }
 };
