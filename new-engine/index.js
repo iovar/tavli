@@ -91,6 +91,13 @@ const SCENES = {
     credits: {
         scene: 'credits',
         actions: [ { value: 'scene:menu', label: 'Back' } ],
+        state: {
+            author: 'Ioannis Varouchakis',
+            license: 'GNU AFFERO GENERAL PUBLIC LICENSE v3',
+            copyright: '2024, 2025',
+            contact: '',
+            text: '',
+        },
     },
     start_game: {
         scene: 'start_game',
@@ -112,7 +119,7 @@ const SCENES = {
         ],
     },
     game: {
-        scene: 'game:single', // or game:match
+        scene: 'game',
         // for the game, actions should be generated on every turn
         actions: [
             { value: 'action:roll' },
@@ -139,19 +146,104 @@ const SCENES = {
                 unusable: [],
             },
             match: {
-                game: 0, // 0 - 2, portes, plakoto, fevga
-                pointsA: 0,
-                pointsB: 0,
-                goal: 3, // 3, 5, 7, 9
+                game: '', // portes, plakoto, fevga
+                scoreA: 0,
+                scoreB: 0,
+                maxScore: 3, // 3, 5, 7, 9
             },
         }
     }
 };
 
+const getNextScene = (value) => {
+    const parts = value.split(':')
+
+    if (parts[0] === 'scene' && parts[1]) {
+        return parts[1];
+    }
+};
+
+const getGameInitState = (action) => {
+    const parts = value.split(':')
+    const isMatch = parts[2] === 'match';
+    const game = (isMatch ? 'portes' : parts[2]) ?? 'portes';
+    const maxScore = (isMatch ? Number.parseInt(parts[3]) : 1) ?? 1;
+
+    const match = {
+        game,
+        maxScore,
+        scoreA: 0,
+        scoreB: 0,
+    };
+
+    return {
+        allowedPositions: [],
+        board: Array.from({ length: 23 }, () => ([])),
+        players: [
+            { out: 0, hit: 0, dice: 0, upFrom: 0 },
+            { out: 0, hit: 0, dice: 0, upFrom: 0 },
+        ],
+        dice: {
+            rolled: [2, 3],
+            played: [],
+            remaining: [2, 3],
+            unusable: [],
+        },
+        match,
+    };
+}
+
+const handleMenuScene = (action, currentScene) => {
+    const key = getNextScene(action.value);
+    const nextScene = SCENES[key] && globalThis.structuredClone(SCENES[key]);
+
+    return nextScene ?? currentScene;
+}
+
+const handleGameSelectScene = (action, currentScene) => {
+    const key = getNextScene(action.value);
+
+    if (key && key !== 'game') {
+        return handleMenuScene(action, currentScene);
+    }
+
+    if (key === 'game') {
+        const nextScene = globalThis.structuredClone(SCENES.game);
+        const initState = getGameInitState(action);
+        // TODO get actions, too
+
+        return {
+            ...nextScene,
+            state: {
+                // TODO must setup board, possible actions, dice, etc?
+                ...nextScene.state,
+                ...initState,
+            },
+        };
+    }
+
+    return currentScene;
+}
+
+const handleScene = (action, currentScene) => {
+    switch(currentScene.scene) {
+        case 'menu':
+        case 'credits':
+            return handleMenuScene(action, currentScene);
+        case 'game':
+            return handleGameSelectScene(action, currentScene);
+        default:
+            return currentScene;
+    }
+};
+
 export function* tavliGame(config) {
+    let running = true;
+    let currentScene = globalThis.structuredClone(SCENES.menu);
 
-
-
-
-
+    while (running) {
+        const action = yield currentScene;
+        console.log('hi', action);
+        currentScene = handleMenuScene(action, currentScene);
+    }
 }
