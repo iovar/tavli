@@ -6,23 +6,34 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-function main() {
+const main = async () => {
     const game = tavliGame({});
-
+    let result = game.next();
     console.log('*** Tavli 3d ***');
 
-    while(true) {
-        let result = game.next();
+    while(!result.done) {
+        const { actions, scene, state } = result.value;
 
-        console.log(`In scene ${result.value.scene}`);
-        console.log('Options are:');
+        if (scene === 'game') {
+            // TODO print board, dice, score, etc
+            console.log('state', state);
 
-        result.value.actions.forEach(({ label }, index) => console.log(index, ') ', label));
-        rl.question('Type a number', number => {
-            console.log('got', number);
-        });
+        } else {
+            console.log('Options are:');
+        }
 
+        actions.forEach(({ label }, index) => console.log(index, ') ', label));
+
+        const value = await new Promise((resolve) => (
+            rl.question('', resolve)
+        ));
+
+        const action = actions[Number.parseInt(value)];
+
+        if (action) {
+            result = game.next(action);
+        }
     }
 }
 
-main();
+await main();

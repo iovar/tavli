@@ -243,7 +243,6 @@ export function* tavliGame(config) {
 
     while (running) {
         const action = yield currentScene;
-        console.log('hi', action);
         currentScene = handleMenuScene(action, currentScene);
     }
 }
