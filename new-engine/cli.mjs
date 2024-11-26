@@ -6,7 +6,30 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-const main = async () => {
+function printActions(actions) {
+    actions.forEach(
+        ({ label }, index) => console.log(index, ') ', label)
+    );
+}
+
+function printScene(scene, state) {
+    if (scene === 'game') {
+        // TODO print board, dice, score, etc
+        console.log('state', state);
+    } else {
+        console.log('Options are:');
+    }
+}
+
+async function readActionSelection(actions) {
+    const value = new Promise((resolve) => (
+        rl.question('', resolve)
+    ));
+
+    return actions[Number.parseInt(value)];
+}
+
+async function main () {
     const game = tavliGame({});
     let result = game.next();
     console.log('*** Tavli 3d ***');
@@ -14,21 +37,10 @@ const main = async () => {
     while(!result.done) {
         const { actions, scene, state } = result.value;
 
-        if (scene === 'game') {
-            // TODO print board, dice, score, etc
-            console.log('state', state);
+        printScene(scene, state);
+        printActions(actions);
 
-        } else {
-            console.log('Options are:');
-        }
-
-        actions.forEach(({ label }, index) => console.log(index, ') ', label));
-
-        const value = await new Promise((resolve) => (
-            rl.question('', resolve)
-        ));
-
-        const action = actions[Number.parseInt(value)];
+        const value = await readActionSelection(actions);
 
         if (action) {
             result = game.next(action);

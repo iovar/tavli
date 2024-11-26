@@ -70,7 +70,6 @@ const config = {
     ]
 }
 
-//  - scene: main menu, start game, start match, options, credits
 const SCENES = {
     menu: {
         scene: 'menu',
@@ -132,6 +131,7 @@ const SCENES = {
         ],
         state: {
             turn: 0,
+            showQuit: false,
             allowedPositions: [], // 0 - 24, 24 being out. act different if hit, up, or taking out
             // 0 - 23, array with team number
             board: Array.from({ length: 23 }, () => ([])),
