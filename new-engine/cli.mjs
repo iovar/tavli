@@ -22,7 +22,7 @@ function printScene(scene, state) {
 }
 
 async function readActionSelection(actions) {
-    const value = new Promise((resolve) => (
+    const value = await new Promise(async (resolve) => (
         rl.question('', resolve)
     ));
 
@@ -40,7 +40,7 @@ async function main () {
         printScene(scene, state);
         printActions(actions);
 
-        const value = await readActionSelection(actions);
+        const action = await readActionSelection(actions);
 
         if (action) {
             result = game.next(action);

@@ -1,3 +1,4 @@
+import { getInitBoard } from './board.js';
 // a game is a state machine, expressed as a saga wich gets input events and returns the next state
 // input events are user actions like 'click', 'option select', 'command sent', etc and they vary on context
 // every state output should also return the allowed actions. One action is also tick meaning there is no user
@@ -163,7 +164,16 @@ const getNextScene = (value) => {
     }
 };
 
-const getGameInitState = (action) => {
+const rollDice = () => {
+    const dice = [ Math.ceil(Math.random() * 6), Math.ceil(Math.random() * 6) ];
+    const remaining = dice[0] === dice[1]
+        ? [ dice[0], dice[0], dice[1], dice[1] ]
+        : [ dice[0], dice[1] ];
+
+    return { dice, remaining };
+};
+
+const getGameInitState = (value) => {
     const parts = value.split(':')
     const isMatch = parts[2] === 'match';
     const game = (isMatch ? 'portes' : parts[2]) ?? 'portes';
@@ -176,18 +186,18 @@ const getGameInitState = (action) => {
         scoreB: 0,
     };
 
+    console.log('getInitBoard', getInitBoard(game));
     return {
         allowedPositions: [],
-        board: Array.from({ length: 23 }, () => ([])),
+        board: getInitBoard(game),
         players: [
             { out: 0, hit: 0, dice: 0, upFrom: 0 },
             { out: 0, hit: 0, dice: 0, upFrom: 0 },
         ],
         dice: {
-            rolled: [2, 3],
             played: [],
-            remaining: [2, 3],
             unusable: [],
+            ...rollDice(),
         },
         match,
     };
@@ -209,7 +219,7 @@ const handleGameSelectScene = (action, currentScene) => {
 
     if (key === 'game') {
         const nextScene = globalThis.structuredClone(SCENES.game);
-        const initState = getGameInitState(action);
+        const initState = getGameInitState(action.value);
         // TODO get actions, too
 
         return {
@@ -222,6 +232,12 @@ const handleGameSelectScene = (action, currentScene) => {
         };
     }
 
+    if (key === 'game') {
+        return {
+            state: { ...currentScene, },
+        };
+    }
+
     return currentScene;
 }
 
@@ -230,8 +246,11 @@ const handleScene = (action, currentScene) => {
         case 'menu':
         case 'credits':
             return handleMenuScene(action, currentScene);
-        case 'game':
+        case 'start_game':
+        case 'start_match':
             return handleGameSelectScene(action, currentScene);
+        case 'game':
+            return handleMenuScene(action, currentScene);
         default:
             return currentScene;
     }
@@ -243,6 +262,6 @@ export function* tavliGame(config) {
 
     while (running) {
         const action = yield currentScene;
-        currentScene = handleMenuScene(action, currentScene);
+        currentScene = handleScene(action, currentScene);
     }
 }
