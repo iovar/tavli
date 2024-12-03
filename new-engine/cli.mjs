@@ -1,6 +1,40 @@
 import { tavliGame } from './index.js';
 import readline from 'node:readline';
 
+const config = {
+    options: [
+        {
+            value: 'player_color',
+            label: 'Select your colour',
+            values: [
+                { value: '#fff', label: 'white' },
+                { value: '#000', label: 'black' },
+            ],
+            selected: undefined,
+        },
+        {
+            value: 'opponent_color',
+            label: 'Select oponent\'s colour',
+            values: [
+                { value: '#000', label: 'black' },
+                { value: '#fff', label: 'white' },
+            ],
+            selected: undefined,
+        },
+        {
+            value: 'board_orientation',
+            label: 'Board orientation',
+            values: [
+                { value: 'top_right', label: 'Top Right' },
+                { value: 'top_left', label: 'Top Left' },
+                { value: 'bottom_right', label: 'Bottom Right' },
+                { value: 'bottom_left', label: 'Bottom Left' },
+            ],
+            selected: undefined,
+        }
+    ]
+}
+
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -30,7 +64,7 @@ async function readActionSelection(actions) {
 }
 
 async function main () {
-    const game = tavliGame({});
+    const game = tavliGame(config);
     let result = game.next();
     console.log('*** Tavli 3d ***');
 
