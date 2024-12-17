@@ -15,6 +15,23 @@ const getAllowedPositions = (dice, board, turn) => {
     return [];
 }
 
+const getGameActions = (value, currentScene) => {
+    if (currentScene.state.showQuit) {
+        return [
+            { value: 'action:continue', label: 'Back' },
+            { value: 'scene:menu', label: 'Yes, quit' },
+        ];
+    }
+    return [
+        { value: 'action:roll' },
+        { value: 'action:select', position: 0, team: 0 }, // position can be arbitrary 0 - 23
+        { value: 'action:move', position: 0, team: 0 },
+        { value: 'action:takeout', position: 0, team: 0 },
+        { value: 'action:frame', delay: 0 }, // time can be arbitrary number of msecs
+        { value: 'action:quit', label: 'Quit' },
+    ];
+};
+
 export const getGameInitState = (value) => {
     const parts = value.split(':')
     const isMatch = parts[2] === 'match';

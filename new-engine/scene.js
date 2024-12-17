@@ -55,7 +55,7 @@ export const SCENES = {
             { value: 'action:select', position: 0, team: 0 }, // position can be arbitrary 0 - 23
             { value: 'action:move', position: 0, team: 0 },
             { value: 'action:takeout', position: 0, team: 0 },
-            { value: 'action:delay', time: 0 }, // time can be arbitrary number of msecs
+            { value: 'action:frame', delay: 0 }, // time can be arbitrary number of msecs
             { value: 'action:quit', label: 'Quit' },
             { value: 'scene:menu', label: 'Yes, quit' },
         ],
