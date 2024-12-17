@@ -1,12 +1,12 @@
-import { getGameInitState } from './game.js';
+import { getGameActions, getGameInitState } from './game.js';
 
 export const SCENES = {
     menu: {
         scene: 'menu',
         actions: [
-            { value: 'scene:options', label: 'Options' },
             { value: 'scene:start_game', label: 'Start Game' },
             { value: 'scene:start_match', label: 'Play a Match' },
+            { value: 'scene:options', label: 'Options' },
             { value: 'scene:credits', label: 'Credits' },
         ],
     },
@@ -110,10 +110,16 @@ const handleGameSelectScene = (action, currentScene) => {
     if (key === 'game') {
         const nextScene = globalThis.structuredClone(SCENES.game);
         const initState = getGameInitState(action.value);
+        const state = {
+            ...nextScene.state,
+            ...initState,
+        };
+        const actions = getGameActions(action.value, state);
         // TODO get actions, too
 
         return {
             ...nextScene,
+            actions,
             state: {
                 // TODO must setup board, possible actions, dice, etc?
                 ...nextScene.state,
@@ -122,25 +128,43 @@ const handleGameSelectScene = (action, currentScene) => {
         };
     }
 
-    if (key === 'game') {
-        return {
-            state: { ...currentScene, },
-        };
-    }
-
     return currentScene;
 }
+
+const handleGameScene = (action, currentScene) => {
+    const key = getNextScene(action.value);
+
+    if (key && key !== 'game') {
+        return handleMenuScene(action, currentScene);
+    }
+
+    const actions = getGameActions(action.value, currentScene.state);
+    const showQuit = action.value === 'action.quit';
+    console.log('how?', showQuit);
+
+    return {
+        ...currentScene,
+        actions,
+        state: {
+            ...currentScene.state,
+            showQuit,
+        },
+    };
+
+
+};
 
 export const handleScene = (action, currentScene) => {
     switch(currentScene.scene) {
         case 'menu':
+        case 'options':
         case 'credits':
             return handleMenuScene(action, currentScene);
         case 'start_game':
         case 'start_match':
             return handleGameSelectScene(action, currentScene);
         case 'game':
-            return handleMenuScene(action, currentScene);
+            return handleGameScene(action, currentScene);
         default:
             return currentScene;
     }

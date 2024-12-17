@@ -15,20 +15,20 @@ const getAllowedPositions = (dice, board, turn) => {
     return [];
 }
 
-const getGameActions = (value, currentScene) => {
-    if (currentScene.state.showQuit) {
+export const getGameActions = (value, state) => {
+    if (state.showQuit) {
         return [
             { value: 'action:continue', label: 'Back' },
             { value: 'scene:menu', label: 'Yes, quit' },
         ];
     }
     return [
-        { value: 'action:roll' },
-        { value: 'action:select', position: 0, team: 0 }, // position can be arbitrary 0 - 23
-        { value: 'action:move', position: 0, team: 0 },
-        { value: 'action:takeout', position: 0, team: 0 },
-        { value: 'action:frame', delay: 0 }, // time can be arbitrary number of msecs
-        { value: 'action:quit', label: 'Quit' },
+        { value: 'action:roll', label: 'roll' },
+        { value: 'action:select', label: 'select', position: 0, team: 0 }, // position can be arbitrary 0 - 23
+        { value: 'action:move', label: 'move', position: 0, team: 0 },
+        { value: 'action:takeout', label: 'take out', position: 0, team: 0 },
+        { value: 'action:frame', label: 'frame', delay: 0 }, // time can be arbitrary number of msecs
+        { value: 'action:quit', label: 'quit', label: 'Quit' },
     ];
 };
 
@@ -38,7 +38,7 @@ export const getGameInitState = (value) => {
     const game = (isMatch ? 'portes' : parts[2]) ?? 'portes';
     const maxScore = (isMatch ? Number.parseInt(parts[3]) : 1) ?? 1;
     const dice = rollDice();
-    const board = getInitBoard();
+    const board = getInitBoard(game);
     const turn = getFirstTurn(dice);
 
     const match = {

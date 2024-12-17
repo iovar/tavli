@@ -49,7 +49,7 @@ function printActions(actions) {
 function printScene(scene, state) {
     if (scene === 'game') {
         // TODO print board, dice, score, etc
-        console.log('state', state);
+        console.log('state', { ...state, board: null });
     } else {
         console.log('Options are:');
     }
