@@ -22,6 +22,7 @@ export const getGameActions = (value, state) => {
             { value: 'scene:menu', label: 'Yes, quit' },
         ];
     }
+
     return [
         { value: 'action:roll', label: 'roll' },
         { value: 'action:select', label: 'select', position: 0, team: 0 }, // position can be arbitrary 0 - 23

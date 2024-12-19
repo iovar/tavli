@@ -131,6 +131,21 @@ const handleGameSelectScene = (action, currentScene) => {
     return currentScene;
 }
 
+const checkShowQuit = (action, currentScene) => ({
+    ...currentScene,
+    showQuit: action.value === 'action:quit'
+        || (currentScene.state.showQuit && action.value !== 'action:continue')
+});
+
+const sceneReducer = (action, currentScene) => ([
+        checkShowQuit
+    ].reduce((scene, fn) => ({
+            ...scene,
+            ...fn(action, scene),
+        }
+    ), currentScene)
+);
+
 const handleGameScene = (action, currentScene) => {
     const key = getNextScene(action.value);
 
@@ -138,16 +153,13 @@ const handleGameScene = (action, currentScene) => {
         return handleMenuScene(action, currentScene);
     }
 
-    const actions = getGameActions(action.value, currentScene.state);
-    const showQuit = action.value === 'action.quit';
-    console.log('how?', showQuit);
+    const nextState = sceneReducer(action, currentScene);
+    const actions = getGameActions(action.value, nextState);
 
     return {
         ...currentScene,
         actions,
         state: {
-            ...currentScene.state,
-            showQuit,
         },
     };
 
