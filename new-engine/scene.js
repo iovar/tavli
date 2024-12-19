@@ -137,13 +137,41 @@ const checkShowQuit = (action, currentScene) => ({
         || (currentScene.state.showQuit && action.value !== 'action:continue')
 });
 
+const ifAction = (value, fn) => (action, currentScene) => (
+    value === action.value ? fn(action, currentScene) : currentScene
+);
+const checkSelect = ifAction('action:select', (action, currentScene) => ({
+    ...currentScene,
+}));
+
+const checkRoll = ifAction('action:roll', (action, currentScene) => ({
+    ...currentScene,
+}));
+
+// updates allowedPositions, available dice, change turn (frame && cannot play)
+const checkMove = ifAction('action:move', (action, currentScene) => ({
+    ...currentScene,
+}));
+
+const checkTakeOut = ifAction('action:takeout', (action, currentScene) => ({
+    ...currentScene,
+}));
+
+const checkFrame = ifAction('action:frame', (action, currentScene) => ({
+    ...currentScene,
+}));
+
 const sceneReducer = (action, currentScene) => ([
-        checkShowQuit
+        checkShowQuit,
+        checkSelect,
+        checkRoll,
+        checkMove,
+        checkTakeOut,
+        checkFrame,
     ].reduce((scene, fn) => ({
-            ...scene,
-            ...fn(action, scene),
-        }
-    ), currentScene)
+        ...scene,
+        ...fn(action, scene),
+    }), currentScene)
 );
 
 const handleGameScene = (action, currentScene) => {
@@ -159,11 +187,8 @@ const handleGameScene = (action, currentScene) => {
     return {
         ...currentScene,
         actions,
-        state: {
-        },
+        state: nextState,
     };
-
-
 };
 
 export const handleScene = (action, currentScene) => {

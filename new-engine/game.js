@@ -23,6 +23,18 @@ export const getGameActions = (value, state) => {
         ];
     }
 
+    // if self turn
+    // if has no dice: roll, quit
+    // if has dice, can play: select, quit
+    // if has dice, can play, has selected: move/takeout, quit
+    // if has dice, can not play: frame, quit
+    // if action == frame && cannot play -> change turn: actions for other player
+    // if enemy turn
+    // if has no dice: roll, quit
+    // if has dice, can play: select, quit
+    // if has dice, can play, has selected: move/takeout, quit
+    // if action == frame && cannot play -> change turn
+
     return [
         { value: 'action:roll', label: 'roll' },
         { value: 'action:select', label: 'select', position: 0, team: 0 }, // position can be arbitrary 0 - 23

@@ -1,3 +1,7 @@
+Idea now is, there's a rule engine that is agnostic to players. It just switches between them, and checks if what they try to do is do-able.
+First the game will be developed in human vs human mode.
+Then I can plug an opponent based on tavli3d
+
 - Coopy rotation from PongNM
 - icon, manifest, sw.js
 - cleanup
