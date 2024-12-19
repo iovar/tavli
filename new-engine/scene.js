@@ -49,7 +49,6 @@ export const SCENES = {
     },
     game: {
         scene: 'game',
-        // for the game, actions should be generated on every turn
         actions: [
             { value: 'action:roll' },
             { value: 'action:select', position: 0, team: 0 }, // position can be arbitrary 0 - 23
@@ -61,6 +60,7 @@ export const SCENES = {
         ],
         state: {
             turn: 0,
+            won: -1, // 0, 1, to get the actions, and set score and next game
             showQuit: false,
             allowedPositions: [], // 0 - 24, 24 being out. act different if hit, up, or taking out
             // 0 - 23, array with team number
@@ -115,7 +115,6 @@ const handleGameSelectScene = (action, currentScene) => {
             ...initState,
         };
         const actions = getGameActions(action.value, state);
-        // TODO get actions, too
 
         return {
             ...nextScene,
@@ -136,6 +135,9 @@ const checkShowQuit = (action, currentScene) => ({
     showQuit: action.value === 'action:quit'
         || (currentScene.state.showQuit && action.value !== 'action:continue')
 });
+
+
+// check game on frame
 
 const ifAction = (value, fn) => (action, currentScene) => (
     value === action.value ? fn(action, currentScene) : currentScene
@@ -181,13 +183,13 @@ const handleGameScene = (action, currentScene) => {
         return handleMenuScene(action, currentScene);
     }
 
-    const nextState = sceneReducer(action, currentScene);
-    const actions = getGameActions(action.value, nextState);
+    const state = sceneReducer(action, currentScene);
+    const actions = getGameActions(action.value, state);
 
     return {
         ...currentScene,
         actions,
-        state: nextState,
+        state,
     };
 };
 

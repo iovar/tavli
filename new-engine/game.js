@@ -15,6 +15,10 @@ const getAllowedPositions = (dice, board, turn) => {
     return [];
 }
 
+const checkCanPlay = (state) => (
+    state.allowedPositions.length && dice.rolled.length
+);
+
 export const getGameActions = (value, state) => {
     if (state.showQuit) {
         return [
@@ -23,17 +27,26 @@ export const getGameActions = (value, state) => {
         ];
     }
 
-    // if self turn
-    // if has no dice: roll, quit
+    const canPlay = checkCanPlay(state);
+
+    if (!canPlay && value !== 'action:frame') {
+        return [
+            { value: 'action:frame', label: 'frame', delay: 0 },
+            { value: 'action:quit', label: 'quit', label: 'Quit' },
+        ];
+    }
+
+    if ((!canPlay && value === 'action:frame') || !dice.rolled.length) {
+        return [
+            { value: 'action:roll', label: 'roll' },
+            { value: 'action:quit', label: 'quit', label: 'Quit' },
+        ];
+    }
+
+    // if has dice, can play, has out: move, quit
     // if has dice, can play: select, quit
     // if has dice, can play, has selected: move/takeout, quit
     // if has dice, can not play: frame, quit
-    // if action == frame && cannot play -> change turn: actions for other player
-    // if enemy turn
-    // if has no dice: roll, quit
-    // if has dice, can play: select, quit
-    // if has dice, can play, has selected: move/takeout, quit
-    // if action == frame && cannot play -> change turn
 
     return [
         { value: 'action:roll', label: 'roll' },
