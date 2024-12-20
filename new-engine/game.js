@@ -1,33 +1,24 @@
 import { getInitBoard } from './board.js';
-
-const rollDice = () => {
-    const dice = [ Math.ceil(Math.random() * 6), Math.ceil(Math.random() * 6) ];
-    const remaining = dice[0] === dice[1]
-        ? [ dice[0], dice[0], dice[1], dice[1] ]
-        : [ dice[0], dice[1] ];
-
-    return { dice, remaining };
-};
+import { rollDice } from './dice.js';
+import { getAllowedMoves } from './get_allowed_moves.js';
+;
 
 const getFirstTurn = (dice) => (((dice[0] === dice[1] && dice[0] < 4) || dice[0] > dice[1]) ? 0 : 1);
 
-const getAllowedPositions = (dice, board, turn) => {
-    return [];
-}
-
 const checkCanPlay = (state) => (
-    state.allowedPositions.length && dice.rolled.length
+    state.allowedMoves.length && (dice.remaining.length - dice.unusable.length) > 0
 );
 
 export const getGameActions = (value, state) => {
+    const player = state.players[state.turn];
+    const canPlay = checkCanPlay(state);
+
     if (state.showQuit) {
         return [
             { value: 'action:continue', label: 'Back' },
             { value: 'scene:menu', label: 'Yes, quit' },
         ];
     }
-
-    const canPlay = checkCanPlay(state);
 
     if (!canPlay && value !== 'action:frame') {
         return [
@@ -43,17 +34,33 @@ export const getGameActions = (value, state) => {
         ];
     }
 
-    // if has dice, can play, has out: move, quit
-    // if has dice, can play: select, quit
-    // if has dice, can play, has selected: move/takeout, quit
-    // if has dice, can not play: frame, quit
+    if (canPlay && player.hit) {
+        return [
+            { value: 'action:move', label: 'move' },
+            { value: 'action:quit', label: 'quit', label: 'Quit' },
+        ];
+    }
+
+    if (canPlay && player.upFrom >= 0) {
+        const canMove = allowedMoves.some(i => i.to !== 24 && i.to !== -1);
+        const canTakeout = allowedMoves.some(i => i.to === 24 || i.to === -1);
+
+        return [
+            ...(canMove ? [{ value: 'action:move', label: 'move' }] : []),
+            ...(canTakeout ? [{ value: 'action:takeout', label: 'takeout' }] : []),
+            { value: 'action:quit', label: 'quit', label: 'Quit' },
+        ];
+    }
+
+    if (players.out < 15) {
+        return [
+            { value: 'action:select', label: 'select', position: 0, team: 0 },
+            { value: 'action:quit', label: 'quit', label: 'Quit' },
+        ];
+    }
 
     return [
-        { value: 'action:roll', label: 'roll' },
-        { value: 'action:select', label: 'select', position: 0, team: 0 }, // position can be arbitrary 0 - 23
-        { value: 'action:move', label: 'move', position: 0, team: 0 },
-        { value: 'action:takeout', label: 'take out', position: 0, team: 0 },
-        { value: 'action:frame', label: 'frame', delay: 0 }, // time can be arbitrary number of msecs
+        { value: 'action:frame', label: 'frame', position: 0, team: 0 },
         { value: 'action:quit', label: 'quit', label: 'Quit' },
     ];
 };
@@ -76,17 +83,13 @@ export const getGameInitState = (value) => {
 
     return {
         turn,
-        allowedPositions: getAllowedPositions(board, dice, turn),
+        allowedMoves: getAllowedMoves(board, dice, turn),
         board,
         players: [
-            { out: 0, hit: 0, dice: 0, upFrom: 0 },
-            { out: 0, hit: 0, dice: 0, upFrom: 0 },
+            { out: 0, hit: 0, dice: 0, upFrom: -1 },
+            { out: 0, hit: 0, dice: 0, upFrom: -1 },
         ],
-        dice: {
-            played: [],
-            unusable: [],
-            ...dice,
-        },
+        dice,
         match,
     };
 }

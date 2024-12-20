@@ -1,4 +1,4 @@
-import { tavliGame } from './index.js';
+import { tavliGame } from './main.js';
 import readline from 'node:readline';
 
 const config = {

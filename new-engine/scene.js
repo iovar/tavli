@@ -1,3 +1,4 @@
+import { rollDice } from './dice.js';
 import { getGameActions, getGameInitState } from './game.js';
 
 export const SCENES = {
@@ -62,7 +63,9 @@ export const SCENES = {
             turn: 0,
             won: -1, // 0, 1, to get the actions, and set score and next game
             showQuit: false,
-            allowedPositions: [], // 0 - 24, 24 being out. act different if hit, up, or taking out
+            allowedMoves: [
+                { from: 0, to: 4 },
+            ], // -1 - 24, -1 & 24 being out. act different if hit, up, or taking out
             // 0 - 23, array with team number
             board: Array.from({ length: 23 }, () => ([])),
             players: [
@@ -120,7 +123,6 @@ const handleGameSelectScene = (action, currentScene) => {
             ...nextScene,
             actions,
             state: {
-                // TODO must setup board, possible actions, dice, etc?
                 ...nextScene.state,
                 ...initState,
             },
@@ -130,50 +132,52 @@ const handleGameSelectScene = (action, currentScene) => {
     return currentScene;
 }
 
-const checkShowQuit = (action, currentScene) => ({
-    ...currentScene,
+const checkShowQuit = (action, currentState) => ({
+    ...currentState,
     showQuit: action.value === 'action:quit'
-        || (currentScene.state.showQuit && action.value !== 'action:continue')
+        || (currentState.showQuit && action.value !== 'action:continue')
 });
-
 
 // check game on frame
 
-const ifAction = (value, fn) => (action, currentScene) => (
-    value === action.value ? fn(action, currentScene) : currentScene
+const ifAction = (value, fn) => (action, currentState) => (
+    value === action.value ? fn(action, currentState) : currentState
 );
-const checkSelect = ifAction('action:select', (action, currentScene) => ({
-    ...currentScene,
+
+// TODO
+const checkSelect = ifAction('action:select', (action, currentState) => ({
+    ...currentState,
 }));
 
-const checkRoll = ifAction('action:roll', (action, currentScene) => ({
-    ...currentScene,
+const checkRoll = ifAction('action:roll', (action, currentState) => ({
+    ...currentState,
+    dice: rollDice(),
 }));
 
-// updates allowedPositions, available dice, change turn (frame && cannot play)
-const checkMove = ifAction('action:move', (action, currentScene) => ({
-    ...currentScene,
+// TODO
+// updates allowedMoves, available dice, change turn (frame && cannot play)
+// check if target is right, do. if not, throw back
+const checkMove = ifAction('action:move', (action, currentState) => ({
+    ...currentState,
 }));
 
-const checkTakeOut = ifAction('action:takeout', (action, currentScene) => ({
-    ...currentScene,
+// TODO
+// same as above
+// also checks endgame condition
+const checkTakeOut = ifAction('action:takeout', (action, currentState) => ({
+    ...currentState,
 }));
 
-const checkFrame = ifAction('action:frame', (action, currentScene) => ({
-    ...currentScene,
-}));
+const checkFrame = ifAction('action:frame', (_, currentState) => currentState);
 
-const sceneReducer = (action, currentScene) => ([
+const stateReducer = (action, currentState) => ([
         checkShowQuit,
         checkSelect,
         checkRoll,
         checkMove,
         checkTakeOut,
         checkFrame,
-    ].reduce((scene, fn) => ({
-        ...scene,
-        ...fn(action, scene),
-    }), currentScene)
+    ].reduce((state, fn) => fn(action, state), currentState)
 );
 
 const handleGameScene = (action, currentScene) => {
@@ -183,7 +187,7 @@ const handleGameScene = (action, currentScene) => {
         return handleMenuScene(action, currentScene);
     }
 
-    const state = sceneReducer(action, currentScene);
+    const state = stateReducer(action, currentScene.state);
     const actions = getGameActions(action.value, state);
 
     return {
