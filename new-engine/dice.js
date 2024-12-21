@@ -10,3 +10,7 @@ export const rollDice = () => {
         unusable: [],
     };
 }
+
+export const updateDice = ({ from, to }, dice, game, turn) => {
+
+};

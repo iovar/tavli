@@ -1,4 +1,4 @@
-import { rollDice } from './dice.js';
+import { rollDice, updateDice } from './dice.js';
 import { getGameActions, getGameInitState } from './game.js';
 
 export const SCENES = {
@@ -138,16 +138,27 @@ const checkShowQuit = (action, currentState) => ({
         || (currentState.showQuit && action.value !== 'action:continue')
 });
 
-// check game on frame
-
 const ifAction = (value, fn) => (action, currentState) => (
     value === action.value ? fn(action, currentState) : currentState
 );
 
-// TODO
-const checkSelect = ifAction('action:select', (action, currentState) => ({
-    ...currentState,
-}));
+const checkSelect = ifAction('action:select', (action, currentState) => {
+    const { turn, allowedMoves, players } = currentState;
+    const player = players[turn];
+    const allowed = allowedMoves.find(({ from }) => from === action.position);
+
+    if (!allowed) {
+        return currentState;
+    }
+
+    const newPlayers = [...players];
+    newPlayers[turn] = { ...player, upFrom: action.position };
+
+    return {
+        ...currentState,
+        players: newPlayers,
+    };
+});
 
 const checkRoll = ifAction('action:roll', (action, currentState) => ({
     ...currentState,
@@ -155,11 +166,29 @@ const checkRoll = ifAction('action:roll', (action, currentState) => ({
 }));
 
 // TODO
-// updates allowedMoves, available dice, change turn (frame && cannot play)
-// check if target is right, do. if not, throw back
-const checkMove = ifAction('action:move', (action, currentState) => ({
-    ...currentState,
-}));
+const checkMove = ifAction('action:move', (action, currentState) => {
+    const { turn, allowedMoves, players, dice } = currentState;
+    const player = players[turn];
+    const allowed = allowedMoves.find(({ from, to }) => from === player.upFrom && to === action.position);
+    const newDice = updateDice(move, dice, game, turn);
+
+    const newPlayers = [...players];
+
+    if (!allowed) {
+        newPlayers[turn] = { ...player, upFrom: -1 };
+
+        return {
+            ...currentState,
+            players: newPlayers,
+        };
+    }
+
+    // then update board, upate enemy hit, dice,
+
+    return {
+        ...currentState,
+    };
+});
 
 // TODO
 // same as above
