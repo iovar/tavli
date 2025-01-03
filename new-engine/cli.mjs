@@ -51,7 +51,7 @@ function printScene(scene, state) {
         // TODO print board, dice, score, etc
         console.log('state', { ...state, board: null });
     } else {
-        console.log('Options are:');
+        console.log('Options are [CTL-C to exit]:');
     }
 }
 

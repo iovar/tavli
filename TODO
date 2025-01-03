@@ -5,9 +5,9 @@ Then I can plug an opponent based on tavli3d
 M1:
 - do remaining TODOs on scene.js
 - do get allowed moves
-- add cli quit
 - add config, with side selection
 - add proper printing of fame state, options 
+- remove magic strings as much as possible, cleanup & organize files
 
 M1: Play on cli, with both players human
 M2: Cli, with pc opponent
