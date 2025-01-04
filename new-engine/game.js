@@ -52,7 +52,6 @@ export const getGameActions = (value, state) => {
         ];
     }
 
-    const MAX_
     if (players.out < 15) {
         return [
             { value: 'action:select', label: 'select', position: 0, team: 0 },
@@ -74,6 +73,10 @@ export const getGameInitState = (value) => {
     const dice = rollDice();
     const board = getInitBoard(game);
     const turn = getFirstTurn(dice);
+    const players = [
+        { out: 0, hit: 0, dice: 0, upFrom: -1 },
+        { out: 0, hit: 0, dice: 0, upFrom: -1 },
+    ];
 
     const match = {
         game,
@@ -86,10 +89,7 @@ export const getGameInitState = (value) => {
         turn,
         allowedMoves: getAllowedMoves({ game, turn, board, players, dice }),
         board,
-        players: [
-            { out: 0, hit: 0, dice: 0, upFrom: -1 },
-            { out: 0, hit: 0, dice: 0, upFrom: -1 },
-        ],
+        players,
         dice,
         match,
     };

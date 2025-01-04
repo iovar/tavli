@@ -64,8 +64,8 @@ export const SCENES = {
             won: -1, // 0, 1, to get the actions, and set score and next game
             showQuit: false,
             allowedMoves: [
-                { from: 0, to: 4 },
-            ], // -1 - 24, -1 & 24 being out. act different if hit, up, or taking out
+                { from: 0, to: 4, dice: 5 },
+            ], // -1 means hit. 24 means out (safe)
             // 0 - 23, array with team number
             board: Array.from({ length: 23 }, () => ([])),
             players: [
