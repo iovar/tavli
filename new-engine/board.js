@@ -10,22 +10,28 @@
 // Fevga:
 //  P0: start on top right, end on bottom right (CCW)
 //  P1: start on bottom left, end on top left (CCW)
+import {
+    PLAKOTO_TRANSLATION_MATRIX,
+    PORTES_TRANSLATION_MATRIX,
+    START_POSITIONS,
+} from './constants/board.js';
 
-const getOwnPlakotoMatrix = (turn, board) => {
-    if (turn === 0) {
-        return board.toReversed();
-    }
+const getOwnPlakotoMatrix = (turn, board) => (
+    Array.from({ length: 24 }, (_, i) => {
+        const to = PLAKOTO_TRANSLATION_MATRIX[i][turn];
+        return board[to];
+    })
+);
 
-    return [...board];
-}
+const getOwnPortesMatrix = (turn, board) => (
+    Array.from({ length: 24 }, (_, i) => {
+        const to = PORTES_TRANSLATION_MATRIX[i][turn];
+        return board[to];
+    })
+);
 
-const getOwnPortesMatrix = (turn, board) => {
-    if (turn === 1) {
-        return board.toReversed();
-    }
-
-    return [...board];
-}
+console.log(getOwnPortesMatrix(0, START_POSITIONS.portes));
+console.log(getOwnPortesMatrix(1, START_POSITIONS.portes));
 
 const getOwnFevgaMatrix = (turn, board) => {
     if (turn === 0) {
@@ -40,6 +46,8 @@ const getOwnFevgaMatrix = (turn, board) => {
 
 // In order to simplify game logic though, everyone is moving from 0 to 23
 const getOwnMatrix = (game, turn, board) => {
+    // TODO make translation matrix arrays object with game as key
+    // turn this whole function to just a single call of Array.from
     if (game === 'plakoto') {
         return translatePlakotoMatrix(turn, board);
     }
@@ -53,6 +61,7 @@ const getOwnMatrix = (game, turn, board) => {
 }
 
 // TODO write translation to default matrix functions
+// similar to above, just a lookup for index with value, instead of indexed access
 const getDefaultPosition = (game, turn, position) => {
     // positon: { from: 0, to: 4, dice: 5 }
     if (game === 'plakoto') {
@@ -66,37 +75,6 @@ const getDefaultPosition = (game, turn, position) => {
     }
     return position;
 }
-
-
-const START_POSITIONS = {
-    plakoto: [
-        [1, 1], [], [], [], [], [0, 0, 0, 0, 0],
-
-        [], [0, 0, 0], [], [], [], [1, 1, 1, 1, 1],
-
-        [0, 0, 0, 0, 0], [], [], [], [1, 1, 1], [],
-
-        [1, 1, 1, 1, 1], [], [], [], [], [0, 0],
-    ],
-    portes:  [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [], [], [], [], [],
-
-        [], [], [], [], [], [],
-
-        [], [], [], [], [], [],
-
-        [], [], [], [], [], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    ],
-    fevga: [
-        [], [], [], [], [], [],
-
-        [], [], [], [], [], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-
-        [], [], [], [], [], [],
-
-        [], [], [], [], [], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    ],
-};
 
 export function getInitBoard(game) {
     return globalThis.structuredClone(START_POSITIONS[game]);
