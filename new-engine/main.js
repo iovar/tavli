@@ -1,4 +1,5 @@
-import { SCENES, handleScene } from './scene.js';
+import { SCENES } from './constants/scene.js';
+import { handleScene } from './scene.js';
 
 export function* tavliGame(config) {
     let running = true;

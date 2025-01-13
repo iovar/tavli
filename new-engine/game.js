@@ -1,12 +1,12 @@
 import { getInitBoard } from './board.js';
 import { rollDice } from './dice.js';
-import { getAllowedMoves } from './get_allowed_moves.js';
+import { getAllowedMoves } from './move.js';
 ;
 
 const getFirstTurn = (dice) => (((dice[0] === dice[1] && dice[0] < 4) || dice[0] > dice[1]) ? 0 : 1);
 
 const checkCanPlay = (state) => (
-    state.allowedMoves.length && (dice.remaining.length - dice.unusable.length) > 0
+    state.allowedMoves.length && (state.dice.remaining.length - state.dice.unusable.length) > 0
 );
 
 export const getGameActions = (value, state) => {
@@ -27,7 +27,7 @@ export const getGameActions = (value, state) => {
         ];
     }
 
-    if ((!canPlay && value === 'action:frame') || !dice.rolled.length) {
+    if ((!canPlay && value === 'action:frame') || !state.dice.rolled.length) {
         return [
             { value: 'action:roll', label: 'roll' },
             { value: 'action:quit', label: 'quit', label: 'Quit' },
