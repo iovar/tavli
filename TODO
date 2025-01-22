@@ -4,9 +4,11 @@ Then I can plug an opponent based on tavli3d
 
 M1:
 - do remaining TODOs on scene.js
+- apply moves
+- allow using more than one dice at a single move
+- check the rule that if there are moves limiting the dice that can be used, they are ignored in favor of ones that allow using all dice, if any.
 - do get allowed moves
-- add config, with side selection
-- add proper printing of fame state, options 
+- add proper printing of frame state, options
 - remove magic strings as much as possible, cleanup & organize files
 
 M1: Play on cli, with both players human

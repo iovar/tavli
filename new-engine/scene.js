@@ -83,24 +83,29 @@ const checkRoll = ifAction('action:roll', (action, currentState) => ({
 const checkMove = ifAction('action:move', (action, currentState) => {
     const { turn, allowedMoves, players, dice } = currentState;
     const player = players[turn];
+    const move = { from: player.upFrom, to: action.position };
     const allowed = allowedMoves.find(({ from, to }) => from === player.upFrom && to === action.position);
-    const newDice = updateDice(move, dice, game, turn);
+    const newDice = updateDice(move, dice);
 
     const newPlayers = [...players];
+    newPlayers[turn] = { ...player, upFrom: -1 };
 
     if (!allowed) {
-        newPlayers[turn] = { ...player, upFrom: -1 };
-
         return {
             ...currentState,
             players: newPlayers,
         };
     }
 
-    // then update board, upate enemy hit, dice,
+    // TODO calculate the implications of the move:
+    // New positions, enemy hit, self hit, dice
 
     return {
         ...currentState,
+        dice: newDice,
+        players: newPlayers,
+        // board?
+
     };
 });
 

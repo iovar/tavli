@@ -24,7 +24,7 @@ export const getUntranslatedMatrix = (game, turn, board) => (
     })
 );
 
-const getUntranslatedPosition = (game, turn, position) => {
+export const getUntranslatedPosition = (game, turn, position) => {
     const { from, to } = position;
     const matrix = TRANSLATION_MATRICES[game][turn];
 

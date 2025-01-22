@@ -12,6 +12,7 @@ const checkCanPlay = (state) => (
 export const getGameActions = (value, state) => {
     const player = state.players[state.turn];
     const canPlay = checkCanPlay(state);
+    const allowedMoves = state.allowedMoves;
 
     if (state.showQuit) {
         return [
@@ -36,7 +37,7 @@ export const getGameActions = (value, state) => {
 
     if (canPlay && player.hit) {
         return [
-            { value: 'action:move', label: 'move' },
+            { value: 'action:move', label: 'move', position: 0 },
             { value: 'action:quit', label: 'quit', label: 'Quit' },
         ];
     }
@@ -46,21 +47,21 @@ export const getGameActions = (value, state) => {
         const canTakeout = allowedMoves.some(i => i.to === 24 || i.to === -1);
 
         return [
-            ...(canMove ? [{ value: 'action:move', label: 'move' }] : []),
+            ...(canMove ? [{ value: 'action:move', label: 'move', position: 0 }] : []),
             ...(canTakeout ? [{ value: 'action:takeout', label: 'takeout' }] : []),
             { value: 'action:quit', label: 'quit', label: 'Quit' },
         ];
     }
 
-    if (players.out < 15) {
+    if (player.out < 15) {
         return [
-            { value: 'action:select', label: 'select', position: 0, team: 0 },
+            { value: 'action:select', label: 'select', position: 0 },
             { value: 'action:quit', label: 'quit', label: 'Quit' },
         ];
     }
 
     return [
-        { value: 'action:frame', label: 'frame', position: 0, team: 0 },
+        { value: 'action:frame', label: 'frame' },
         { value: 'action:quit', label: 'quit', label: 'Quit' },
     ];
 };

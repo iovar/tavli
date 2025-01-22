@@ -59,8 +59,13 @@ async function readActionSelection(actions) {
     const value = await new Promise(async (resolve) => (
         rl.question('', resolve)
     ));
-
-    return actions[Number.parseInt(value)];
+    const params = value.split(' ');
+    const action = actions[Number.parseInt(params[0])];
+    if (action?.value === 'action:select' || action?.value === 'action:move') {
+        const position = Number.parseInt(params[1]) ?? 0;
+        return { ...action, position };
+    }
+    return action;
 }
 
 async function main () {
