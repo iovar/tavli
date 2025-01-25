@@ -67,6 +67,23 @@ const getAllowedMovesPortes = ({ turn, board, players, dice }) => {
     return allowed;
 }
 
+const getUpdatedBoardPortes = (move, board, turn) => {
+    const { from, to } = move;
+    const updatedBoard = structuredClone(board);
+    hit = board[to].length === 1 && board[to][0] !== turn;
+
+    if (from !== -1) {
+        updatedBoard[from].pop();
+    }
+    if (to !== 24 && !hit) {
+        updatedBoard[to].push(turn);
+    } else if (hit) {
+        updatedBoard[to] = [turn];
+    }
+    return { updatedBoard, hit };
+}
+
 export {
     getAllowedMovesPortes,
+    getUpdatedBoardPortes,
 };

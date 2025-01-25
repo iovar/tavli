@@ -1,6 +1,9 @@
 import { SCENES } from './constants/scene.js';
 import { rollDice, updateDice } from './dice.js';
 import { getGameActions, getGameInitState } from './game.js';
+import { getAllowedMoves } from './move.js';
+import { getUpdatedBoardPortes } from './rules/portes.js';
+
 
 export const getNextScene = (value) => {
     const parts = value.split(':')
@@ -74,14 +77,22 @@ const checkSelect = ifAction('action:select', (action, currentState) => {
     };
 });
 
-const checkRoll = ifAction('action:roll', (action, currentState) => ({
-    ...currentState,
-    dice: rollDice(),
-}));
+const checkRoll = ifAction('action:roll', (action, currentState) => {
+    const dice = rollDice();
+    const { game, turn, board, players } = currentState;
+    const allowedMoves = getAllowedMoves({ game, turn, board, players, dice });
+    // find unusable moves after recursing through all possible moves
 
-// TODO
+    return {
+        ...currentState,
+        dice,
+        allowedMoves,
+    }
+});
+
 const checkMove = ifAction('action:move', (action, currentState) => {
     const { turn, allowedMoves, players, dice } = currentState;
+    const otherPlayer = turn === 0 ? 1 : 0;
     const player = players[turn];
     const move = { from: player.upFrom, to: action.position };
     const allowed = allowedMoves.find(({ from, to }) => from === player.upFrom && to === action.position);
@@ -97,15 +108,28 @@ const checkMove = ifAction('action:move', (action, currentState) => {
         };
     }
 
-    // TODO calculate the implications of the move:
-    // New positions, enemy hit, self hit, dice
+    const { updatedBoard, hit } = getUpdatedBoardPortes(move, currentState.board, turn);
+    if (move.from === -1) {
+        newPlayers[turn].hit -= 1;
+    }
+    if (hit) {
+        newPlayers[otherPlayer].hit += 1;
+    }
+
+    const newAllowedMoves = getAllowedMoves({
+        game,
+        turn,
+        board: updatedBoard,
+        players: newPlayers,
+        dice: newDice,
+     });
 
     return {
         ...currentState,
         dice: newDice,
         players: newPlayers,
-        // board?
-
+        board: updatedBoard,
+        allowedMoves: newAllowedMoves,
     };
 });
 

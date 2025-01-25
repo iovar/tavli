@@ -13,13 +13,16 @@ export const rollDice = () => {
 
 export const updateDice = ({ from, to }, dice) => {
     const rolled = dice.rolled;
-    const remaining = dice.remaining.filter(i => i !== to - from);
-    const unusable = [];
+    const remaining = [...dice.remaining];
+    const indexToRemove = remaining.indexOf(to - from);
+    if (indexToRemove !== -1) {
+        remaining.splice(indexToRemove, 1);
+    }
 
     return {
         ...dice,
         rolled,
         remaining,
-        unusable,
+        unusable: dice.unusable ?? [],
     };
 };
