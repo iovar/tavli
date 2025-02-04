@@ -2,6 +2,12 @@ Idea now is, there's a rule engine that is agnostic to players. It just switches
 First the game will be developed in human vs human mode.
 Then I can plug an opponent based on tavli3d
 
+1. create action creators
+2. create scene & action constants (& others if needed)
+3. create scene intializers
+4. move new-engine & cli.js to src (cli.js out of new-engine, to a FEs dir)
+5. check[Action] functions need to move, maybe to actions
+
 M1:
 - do remaining TODOs on scene.js
 - apply moves
