@@ -2,8 +2,8 @@ export const SCENES = {
     menu: {
         scene: 'menu',
         actions: [
-            { value: 'scene:start_game', label: 'Start Game' },
-            { value: 'scene:start_match', label: 'Play a Match' },
+            { value: 'scene:startGame', label: 'Start Game' },
+            { value: 'scene:startMatch', label: 'Play a Match' },
             { value: 'scene:options', label: 'Options' },
             { value: 'scene:credits', label: 'Credits' },
         ],
@@ -26,8 +26,8 @@ export const SCENES = {
             text: '',
         },
     },
-    start_game: {
-        scene: 'start_game',
+    startGame: {
+        scene: 'startGame',
         actions: [
             { value: 'scene:game:portes', label: 'Portes' },
             { value: 'scene:game:plakoto', label: 'Plakoto' },
@@ -35,8 +35,8 @@ export const SCENES = {
             { value: 'scene:menu', label: 'Back' },
         ],
     },
-    start_match: {
-        scene: 'start_match',
+    startMatch: {
+        scene: 'startMatch',
         actions: [
             { value: 'scene:game:match:3', label: '3 Points' },
             { value: 'scene:game:match:5', label: '5 Points' },
@@ -84,3 +84,13 @@ export const SCENES = {
         }
     }
 };
+
+export const SceneNames = {
+    menu: 'menu',
+    options: 'options',
+    credits: 'credits',
+    startGame: 'startGame',
+    startMatch: 'startMatch',
+    game: 'game',
+};
+

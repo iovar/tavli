@@ -1,6 +1,17 @@
-import { getInitBoard } from './board.js';
-import { rollDice } from './dice.js';
-import { getAllowedMoves } from './move.js';
+import { ActionSeparator, Actions } from './constants/actions.js';
+import { GameTypes } from './constants/game.js';
+import {
+    getRollAction,
+    getSelectAction,
+    getMoveAction,
+    getTakeoutAction,
+    getFrameAction,
+    getContinueAction,
+    getQuitAction,
+} from './state/actions.js';
+import { getInitBoard } from './items/board.js';
+import { rollDice } from './items/dice.js';
+import { getAllowedMoves } from './rules/move.js';
 ;
 
 const getFirstTurn = (dice) => (((dice[0] === dice[1] && dice[0] < 4) || dice[0] > dice[1]) ? 0 : 1);
@@ -16,29 +27,29 @@ export const getGameActions = (value, state) => {
 
     if (state.showQuit) {
         return [
-            { value: 'action:continue', label: 'Back' },
+            getContinueAction(),
             { value: 'scene:menu', label: 'Yes, quit' },
         ];
     }
 
-    if (!canPlay && value !== 'action:frame') {
+    if (!canPlay && value !== Actions.frame) {
         return [
-            { value: 'action:frame', label: 'frame', delay: 0 },
-            { value: 'action:quit', label: 'quit', label: 'Quit' },
+            getFrameAction(0),
+            getQuitAction(),
         ];
     }
 
-    if ((!canPlay && value === 'action:frame') || !state.dice.rolled.length) {
+    if ((!canPlay && value === Actions.frame) || !state.dice.rolled.length) {
         return [
-            { value: 'action:roll', label: 'roll' },
-            { value: 'action:quit', label: 'quit', label: 'Quit' },
+            getRollAction(),
+            getQuitAction(),
         ];
     }
 
     if (canPlay && player.hit) {
         return [
-            { value: 'action:move', label: 'move', position: 0 },
-            { value: 'action:quit', label: 'quit', label: 'Quit' },
+            getMoveAction(0),
+            getQuitAction(),
         ];
     }
 
@@ -47,29 +58,29 @@ export const getGameActions = (value, state) => {
         const canTakeout = allowedMoves.some(i => i.to === 24 || i.to === -1);
 
         return [
-            ...(canMove ? [{ value: 'action:move', label: 'move', position: 0 }] : []),
-            ...(canTakeout ? [{ value: 'action:takeout', label: 'takeout' }] : []),
-            { value: 'action:quit', label: 'quit', label: 'Quit' },
+            ...(canMove ? [getMoveAction(0)] : []),
+            ...(canTakeout ? [getTakeoutAction()] : []),
+            getQuitAction(),
         ];
     }
 
     if (player.out < 15) {
         return [
-            { value: 'action:select', label: 'select', position: 0 },
-            { value: 'action:quit', label: 'quit', label: 'Quit' },
+            getSelectAction(0),
+            getQuitAction(),
         ];
     }
 
     return [
-        { value: 'action:frame', label: 'frame' },
-        { value: 'action:quit', label: 'quit', label: 'Quit' },
+        getFrameAction(),
+        getQuitAction(),
     ];
 };
 
 export const getGameInitState = (value) => {
-    const parts = value.split(':')
-    const isMatch = parts[2] === 'match';
-    const game = (isMatch ? 'portes' : parts[2]) ?? 'portes';
+    const parts = value.split(ActionSeparator)
+    const isMatch = parts[2] === GameTypes.match;
+    const game = (isMatch ? Games.portes : parts[2]) ?? Games.portes;
     const maxScore = (isMatch ? Number.parseInt(parts[3]) : 1) ?? 1;
     const dice = rollDice();
     const board = getInitBoard(game);

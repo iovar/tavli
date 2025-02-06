@@ -1,7 +1,8 @@
-import { getAllowedMovesPortes } from './rules/portes.js';
-import { getAllowedMovesPlakoto } from './rules/plakoto.js';
-import { getAllowedMovesFevga } from './rules/fevga.js';
-import { getTranslatedMatrix, getUntranslatedPosition } from './board.js';
+import { Games } from '../constants/game.js';
+import { getAllowedMovesPortes } from './portes.js';
+import { getAllowedMovesPlakoto } from './plakoto.js';
+import { getAllowedMovesFevga } from './fevga.js';
+import { getTranslatedMatrix, getUntranslatedPosition } from '../items/board.js';
 
 export const getAllowedMoves = ({
     game,
@@ -13,15 +14,15 @@ export const getAllowedMoves = ({
     const gameProps = { board: translatedBoard, turn, ...restProps };
     let moves = [];
 
-    if (game === 'portes') {
+    if (game === Games.portes) {
         moves = getAllowedMovesPortes(gameProps);
     }
 
-    if (game === 'plakoto') {
+    if (game === Games.plakoto) {
         moves = getAllowedMovesPlakoto(gameProps);
     }
 
-    if (game === 'fevga') {
+    if (game === Games.fevga) {
         moves = getAllowedMovesFevga(gameProps);
     }
 

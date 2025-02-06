@@ -10,7 +10,7 @@
 // Fevga:
 //  P0: start on top right, end on bottom right (CCW)
 //  P1: start on bottom left, end on top left (CCW)
-import { START_POSITIONS, TRANSLATION_MATRICES } from './constants/board.js';
+import { START_POSITIONS, TRANSLATION_MATRICES } from '../constants/board.js';
 
 // In order to simplify game logic though, everyone is moving from 0 to 23
 export const getTranslatedMatrix = (game, turn, board) => (
